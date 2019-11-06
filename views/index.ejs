@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+        <title>Rota App</title>
+<link rel="stylesheet" href="themes/groupapp.min.css" />
+<link rel="stylesheet" href="themes/jquery.mobile.icons.min.css" />
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile.structure-1.4.5.min.css" />
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+  </head>
+  <body>
+    <div data-role="page" id="userloggedout">
+        <form action="/login" method="post">
+            Username: <input type="text" id="username" name="username">
+            <input type="submit" data-icon="home">
+    </form>
+        <p>Don't have an account? <a href="#signup">Sign Up</a>!</p>
+    </div><!-- end of userloggedout -->
+    <div data-role="page" id="signup">
+        <form action="/signup" method="post">
+            Username: <input type="text" id="username" name="username">
+            First Name: <input type="text" id="fname" name="fname">
+            Last Name: <input type="text" id="lname" name="lname">
+            E-mail: <input type="email" id="email" name="email">
+            Password: <input type="password" id="password" name="password">
+            <input type="submit" value="Submit" >
+    </form>
+    </div><!-- end of userloggedout -->
+      <div data-role="page" id="home">
+        <h2>My Calander</h2>
+    
+    </div>
+    </body>
+    <script>
+        var user = $("#username").val();
+        var fname = $("#fname").val();
+        var lname = $("#lname").val();
+        var email = $("#email").val();
+        var pass = $("#password").val();
+
+$.post( "/signup", { username: user, fname : fname, lname : lname, email : email, password : pass })
+  .done(function( data ) {
+    alert( "Data Loaded: " + data );
+    console.log(data);
+            if(data = ""){
+                  console.log(data);
+                  
+              }else if(data = "pass"){
+                  console.log(data);
+                  window.location = "/#home";
+                  
+              }else if(data = "fail"){
+                  console.log(data);
+                  window.location= "/#signup";
+              }
+  });
+</script>
+
+</html>
