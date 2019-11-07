@@ -18,12 +18,12 @@
   <body>
     <div data-role="page" id="userloggedout">
         <form action="/login" method="post">
-            Username: <input type="text" id="username" name="username">
+            Username: <input type="text" id="username2" name="username2">
             <input type="submit" data-icon="home">
     </form>
-        <p>Don't have an account? <a href="#signup">Sign Up</a>!</p>
+        <p>Don't have an account? <a href="#signuppage">Sign Up</a>!</p>
     </div><!-- end of userloggedout -->
-    <div data-role="page" id="signup">
+    <div data-role="page" id="signuppage">
         <form action="/signup" method="post">
             Username: <input type="text" id="username" name="username">
             First Name: <input type="text" id="fname" name="fname">
@@ -32,14 +32,14 @@
             Password: <input type="password" id="password" name="password">
             <input type="submit" value="Submit" >
     </form>
-    </div><!-- end of userloggedout -->
+    </div><!-- end of signup -->
       <div data-role="page" id="home">
         <h2>My Calander</h2>
     
     </div>
     </body>
     <script>
-        var user = $("#username").val();
+$( "#signup" ).click(function() { // when button #signup is clicked    var user = $("#username").val();
         var fname = $("#fname").val();
         var lname = $("#lname").val();
         var email = $("#email").val();
@@ -61,6 +61,7 @@ $.post( "/signup", { username: user, fname : fname, lname : lname, email : email
                   window.location= "/#signup";
               }
   });
+});
 </script>
 
 </html>

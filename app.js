@@ -37,15 +37,16 @@ app.post('/signup',function(req,res){
     console.log("Last name = "+lname);
     // end of test
     var mysql = require('mysql')
-        var connection = mysql.createConnection({
+    var connection = mysql.createConnection({
           host     : 'localhost',
           user     : 'root',
           password : 'root',
           database : 'rota'
-        });
+    });
     connection.connect();
-    var sql = "select * from rota.users where username = '"+user+"' OR email = '"+email+"' ";
-    connection.query(sql, function (err, rows, fields) {
+    console.log("Connect to database");
+    var sql1 = "select * from rota.users where username = '"+user+"' OR email = '"+email+"' ";
+    connection.query(sql1, function (err, rows, fields) {
         console.log(rows.length);
         if (rows.length != 0){
             
