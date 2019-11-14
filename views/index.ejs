@@ -16,21 +16,23 @@
 
   </head>
   <body>
-    <div data-role="page" id="userloggedout">
+    <div data-role="page" id="loginpage">
         <form action="/login" method="post">
-            Username: <input type="text" id="username2" name="username2">
-            <input type="submit" data-icon="home">
-    </form>
+            Username: <input type="text" id="usernameLog" name="username">
+            Password: <input type="password" id="passwordLog" name="password">
+            <input type="submit" value="Login">
+        </form>
         <p>Don't have an account? <a href="#signuppage">Sign Up</a>!</p>
     </div><!-- end of userloggedout -->
+      
     <div data-role="page" id="signuppage">
         <form action="/signup" method="post">
-            Username: <input type="text" id="username" name="username">
-            First Name: <input type="text" id="fname" name="fname">
-            Last Name: <input type="text" id="lname" name="lname">
-            E-mail: <input type="email" id="email" name="email">
-            Password: <input type="password" id="password" name="password">
-            <input type="submit" value="Submit" >
+            Username: <input type="text" id="usernameSign" name="username">
+            First Name: <input type="text" id="fnameSign" name="fname">
+            Last Name: <input type="text" id="lnameSign" name="lname">
+            E-mail: <input type="email" id="emailSign" name="email">
+            Password: <input type="password" id="passwordSign" name="password">
+            <input type="submit" value="Submit">
     </form>
     </div><!-- end of signup -->
       <div data-role="page" id="home">
@@ -39,29 +41,55 @@
     </div>
     </body>
     <script>
+// Start of SignUp
 $( "#signup" ).click(function() { // when button #signup is clicked    var user = $("#username").val();
-        var fname = $("#fname").val();
-        var lname = $("#lname").val();
-        var email = $("#email").val();
-        var pass = $("#password").val();
+        var fname = $("#fnameSign").val();
+        var lname = $("#lnameSign").val();
+        var email = $("#emailSign").val();
+        var pass = $("#passwordSign").val();
 
-$.post( "/signup", { username: user, fname : fname, lname : lname, email : email, password : pass })
-  .done(function( data ) {
-    alert( "Data Loaded: " + data );
-    console.log(data);
-            if(data = ""){
-                  console.log(data);
+    $.post( "/signup", { username: user, fname : fname, lname : lname, email : email, password : pass }).done(function( data ) {
+        alert( "Data Loaded: " + data );
+        console.log("Returned data: " + data);
+    if(data = ""){
+        console.log(data);
                   
-              }else if(data = "pass"){
-                  console.log(data);
-                  window.location = "/#home";
+    }else if(data = "pass"){
+        console.log(data);
+        window.location = "/#home";
                   
-              }else if(data = "fail"){
-                  console.log(data);
-                  window.location= "/#signup";
-              }
+    }else if(data = "fail"){
+        console.log(data);
+        window.location= "/#signuppage";
+    }
   });
 });
+// End of SignUp
+// Start of Login
+$( "#login" ).click(function() { // when button #loginform is clicked
+    var username = $("#usernameLog").val();
+    var password = $("#passwordLog").val();
+    console.log("submit");
+    $.post( "/login", { username : username, password : password }).done(function( data ) {
+        console.log(data);
+        if (data == username){
+            console.log("WIN!!");
+    
+            //window.location = "/#home";
+                    
+            /*$.get("/login", { }).done(function( data ) {
+                        
+            });*/
+        }else{
+            console.log("ERROR");
+            //window.location = "/#err";
+                    
+        }
+             
+    });
+         
+});
+// End of Login       
 </script>
 
 </html>

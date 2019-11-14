@@ -2,6 +2,8 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
+var expressSession = require('express-session'); // session 
+
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
@@ -17,6 +19,8 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+// Use the session middleware
+app.use(expressSession({ secret: 'max', saveUninitialized: false, resave:false}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.post('/signup',function(req,res){
@@ -45,9 +49,9 @@ app.post('/signup',function(req,res){
     });
     connection.connect();
     console.log("Connect to database");
-    var sql1 = "select * from rota.users where username = '"+user+"' OR email = '"+email+"' ";
-    connection.query(sql1, function (err, rows, fields) {
-        console.log(rows.length);
+    var sql = "select * from rota.users where username = '"+user+"' OR email = '"+email+"' ;";
+    connection.query(sql, function (err, rows, fields) {
+        console.log(rows);
         if (rows.length != 0){
             
             console.log("Error! Duplicate E-Mail or Username");
@@ -66,6 +70,64 @@ app.post('/signup',function(req,res){
         res.send(data);
     });
 });
+// end of /signup
+
+// start of /login
+app.post('/login',function(req,res){
+  console.log('/login');
+  // get the username from the request.
+  var username = req.body.username;
+  var pass = req.body.password;
+  console.log("User name = "+username);
+  
+  
+        var mysql = require('mysql')
+        var connection = mysql.createConnection({
+          host     : 'localhost',
+          user     : 'root',
+          password : 'root',
+          database : 'rota'
+        });
+
+        connection.connect();
+
+    
+    
+    var sql = "select * from rota.users where username = '"+username+"' and password = '"+pass+"'";
+    console.log(sql);
+    
+    
+    
+    connection.query(sql, function (err, rows, fields) {
+    console.log(rows);
+      console.log("INSIDE");
+      console.log(rows[0].username);
+      
+    //put into the session
+    req.session.username = rows[0].username;
+    req.session.password = rows[0].password;
+    req.session.fname = rows[0].fname;
+    req.session.email = rows[0].email;
+    req.session.lname = rows[0].lname;
+    
+         //res.render({firstname: req.params.fname});
+
+        res.send(username);      
+        
+        
+  if (err) throw err;
+  if (rows.length != 1){
+      console.log("Error; Username & Password did not match");
+      connection.end();
+  }else{
+
+      connection.end();
+  }
+});
+
+
+});
+// end of /login
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
