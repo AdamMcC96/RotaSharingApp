@@ -17,32 +17,35 @@
   </head>
   <body>
     <div data-role="page" id="loginpage">
-        <form action="/login" method="post">
+        <!--<form action="/login" method="post">-->
             Username: <input type="text" id="usernameLog" name="username">
             Password: <input type="password" id="passwordLog" name="password">
-            <input type="submit" value="Login">
-        </form>
-        <p>Don't have an account? <a href="#signuppage">Sign Up</a>!</p>
+            <input type="submit" id="loginBtn" value="Login">
+        <!--</form>-->
+  <p>Don't have an account? <a href="#signuppage">Sign Up</a>!</p>
     </div><!-- end of userloggedout -->
       
     <div data-role="page" id="signuppage">
-        <form action="/signup" method="post">
+        <!--<form action="/signup" method="post">-->
             Username: <input type="text" id="usernameSign" name="username">
             First Name: <input type="text" id="fnameSign" name="fname">
             Last Name: <input type="text" id="lnameSign" name="lname">
             E-mail: <input type="email" id="emailSign" name="email">
             Password: <input type="password" id="passwordSign" name="password">
-            <input type="submit" value="Submit">
-    </form>
+            <input type="submit" id="signupBtn" value="Submit">
+    <!--</form>-->
     </div><!-- end of signup -->
-      <div data-role="page" id="home">
-        <h2>My Calander</h2>
+      <div data-role="page" id="calendar">
+        <h2>My Calendar</h2>
+          
+        <% include partials/navbar %>
     
     </div>
     </body>
     <script>
 // Start of SignUp
-$( "#signup" ).click(function() { // when button #signup is clicked    var user = $("#username").val();
+$( "#signupBtn" ).click(function() { // when button #signup is clicked    
+        var user = $("#usernameSign").val();
         var fname = $("#fnameSign").val();
         var lname = $("#lnameSign").val();
         var email = $("#emailSign").val();
@@ -66,23 +69,23 @@ $( "#signup" ).click(function() { // when button #signup is clicked    var user 
 });
 // End of SignUp
 // Start of Login
-$( "#login" ).click(function() { // when button #loginform is clicked
+$( "#loginBtn" ).click(function() { // when button #loginform is clicked
     var username = $("#usernameLog").val();
     var password = $("#passwordLog").val();
-    console.log("submit");
+    console.log("submit login");
     $.post( "/login", { username : username, password : password }).done(function( data ) {
         console.log(data);
         if (data == username){
             console.log("WIN!!");
     
-            //window.location = "/#home";
+            window.location = "/#calendar";
                     
             /*$.get("/login", { }).done(function( data ) {
                         
             });*/
         }else{
             console.log("ERROR");
-            //window.location = "/#err";
+            window.location = "/#err";
                     
         }
              
