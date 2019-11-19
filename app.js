@@ -3,7 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var expressSession = require('express-session'); // session 
-
+var bcrypt = require('bcryptjs');
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
@@ -31,6 +31,9 @@ app.post('/signup',function(req,res){
     var email = req.body.email;
     var fname = req.body.fname;
     var lname = req.body.lname;
+    console.log("Og Pass: " +pass);
+    bcrypt.hash(pass, 8, function(err, hash) {
+    pass = hash;
     // end of request
     var data = "";
     // testing the details
@@ -68,6 +71,7 @@ app.post('/signup',function(req,res){
         }
         console.log(data);
         res.send(data);
+        }); // salt
     });
 });
 // end of /signup
@@ -93,7 +97,7 @@ app.post('/login',function(req,res){
 
     
     
-    var sql = "select * from rota.users where username = '"+username+"' and password = '"+pass+"'";
+    var sql = "select * from rota.users where username = '"+username+"'";
     console.log(sql);
     
     
@@ -102,14 +106,25 @@ app.post('/login',function(req,res){
     console.log(rows);
       console.log("INSIDE");
       console.log(rows[0].username);
-      
+    var passHash = rows[0].password;
+    console.log(passHash);
+    bcrypt.compare(pass, passHash, function(err, res) {
+    
+    if (res){ // if the hash of pass = passHash is true
+    console.log("Pass equal");
+
     //put into the session
     req.session.username = rows[0].username;
     req.session.password = rows[0].password;
     req.session.fname = rows[0].fname;
     req.session.email = rows[0].email;
     req.session.lname = rows[0].lname;
-    
+    }
+    else{
+            console.log("Error hashes don't match");
+            connection.end();
+    }
+    });// bcrypt
          //res.render({firstname: req.params.fname});
 
         res.send(username);      
