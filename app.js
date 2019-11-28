@@ -84,7 +84,6 @@ app.post('/login',function(req,res){
   var pass = req.body.password;
   console.log("User name = "+username);
   
-  
         var mysql = require('mysql')
         var connection = mysql.createConnection({
           host     : 'localhost',
@@ -94,55 +93,52 @@ app.post('/login',function(req,res){
         });
 
         connection.connect();
-
-    
     
     var sql = "select * from rota.users where username = '"+username+"'";
     console.log(sql);
     
-    
-    
     connection.query(sql, function (err, rows, fields) {
-    console.log(rows);
-      console.log("INSIDE");
-      console.log(rows[0].username);
-    var passHash = rows[0].password;
-    console.log(passHash);
-    bcrypt.compare(pass, passHash, function(err, res) {
+        console.log(rows);
+        console.log("INSIDE");
+        console.log(rows[0].username);
+        
+        var passHash = rows[0].password; // set passHash = hashed pass from db
+        console.log(passHash);
+        console.log(pass);
+        
+        bcrypt.compare(pass, passHash, function(err, res) {
     
-    if (res){ // if the hash of pass = passHash is true
-    console.log("Pass equal");
+            if (res){ // if the hash of pass = passHash is true
+                console.log("Pass equal");
 
-    //put into the session
-    req.session.username = rows[0].username;
-    req.session.password = rows[0].password;
-    req.session.fname = rows[0].fname;
-    req.session.email = rows[0].email;
-    req.session.lname = rows[0].lname;
-    }
-    else{
-            console.log("Error hashes don't match");
-            connection.end();
-    }
-    });// bcrypt
-         //res.render({firstname: req.params.fname});
-
-        res.send(username);      
+            //put into the session
+                req.session.username = rows[0].username;
+                req.session.password = rows[0].password;
+                req.session.fname = rows[0].fname;
+                req.session.email = rows[0].email;
+                req.session.lname = rows[0].lname;
         
+                if (err) throw err;
+                if (rows.length != 1){
+                    console.log("Error; Username & Password did not match");
+                    connection.end();
+                }else{ // end of rows.length
+                    connection.end();
+                } // end of else
+            } // end if (res)
+            else{
+                console.log("Error hashes don't match");
+                connection.end();
+            } // end of else
+        }); // end of bcrypt
+        //res.render({firstname: req.params.fname});
         
-  if (err) throw err;
-  if (rows.length != 1){
-      console.log("Error; Username & Password did not match");
-      connection.end();
-  }else{
+              
+    }); // end of query
+    res.send(username);
 
-      connection.end();
-  }
-});
+}); // end of /login
 
-
-});
-// end of /login
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 

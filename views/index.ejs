@@ -37,12 +37,32 @@
     </div><!-- end of signup -->
       <div data-role="page" id="calendar">
         <h2>My Calendar</h2>
-          
+        <div id="datelist">
+        </div>
         <% include partials/navbar %>
     
     </div>
     </body>
     <script>
+// Start of myDate
+$(document).ready(function(){
+function myDate(){
+    var mydate = new Date();
+    var day = mydate.getDay();
+    var month = mydate.getMonth();
+    var year = mydate.getYear();
+    var d = mydate.getDate();
+    if (year < 1000){
+        year+=1000;
+    }if (d<10){
+        d = "0" + d;
+        var days = new Array("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
+        var months = new Array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+        $("#datelist").html(""+days[day]+", "+months[month]+" "+d+", "+year+"");
+    }
+}        
+});
+// End of myDate
 // Start of SignUp
 $( "#signupBtn" ).click(function() { // when button #signup is clicked    
         var user = $("#usernameSign").val();
@@ -79,7 +99,8 @@ $( "#loginBtn" ).click(function() { // when button #loginform is clicked
             console.log("WIN!!");
     
             window.location = "/#calendar";
-                    
+            
+            
             /*$.get("/login", { }).done(function( data ) {
                         
             });*/
@@ -92,7 +113,9 @@ $( "#loginBtn" ).click(function() { // when button #loginform is clicked
     });
          
 });
-// End of Login       
+// End of Login  
+        
+
 </script>
 
 </html>
