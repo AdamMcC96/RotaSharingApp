@@ -13,7 +13,89 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<style>
+* {box-sizing: border-box;}
+ul {list-style-type: none;}
+body {font-family: Verdana, sans-serif;}
 
+.month {
+  padding: 70px 25px;
+  width: 100%;
+  background: #1abc9c;
+  text-align: center;
+}
+
+.month ul {
+  margin: 0;
+  padding: 0;
+}
+
+.month ul li {
+  color: white;
+  font-size: 20px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+}
+
+.month .prev {
+  float: left;
+  padding-top: 10px;
+}
+
+.month .next {
+  float: right;
+  padding-top: 10px;
+}
+
+.weekdays {
+  margin: 0;
+  padding: 10px 0;
+  background-color: #ddd;
+}
+
+.weekdays li {
+  display: inline-block;
+  width: 13.6%;
+  color: #666;
+  text-align: center;
+}
+
+.days {
+  padding: 10px 0;
+  background: #eee;
+  margin: 0;
+}
+
+.days li {
+  list-style-type: none;
+  display: inline-block;
+  width: 13.6%;
+  text-align: center;
+  margin-bottom: 5px;
+  font-size:12px;
+  color: #777;
+}
+
+.days li .active {
+  padding: 5px;
+  background: #1abc9c;
+  color: white !important
+}
+
+/* Add media queries for smaller screens */
+@media screen and (max-width:720px) {
+  .weekdays li, .days li {width: 13.1%;}
+}
+
+@media screen and (max-width: 420px) {
+  .weekdays li, .days li {width: 12.5%;}
+  .days li .active {padding: 2px;}
+}
+
+@media screen and (max-width: 290px) {
+  .weekdays li, .days li {width: 12.2%;}
+}
+</style>
   </head>
   <body>
     <div data-role="page" id="loginpage">
@@ -38,7 +120,62 @@
       <div data-role="page" id="calendar">
         <h2>My Calendar</h2>
         <div id="datelist">
-        </div>
+        <div class="month">      
+  <ul>
+    <li class="prev">&#10094;</li>
+    <li class="next">&#10095;</li>
+    <li>
+      August<br>
+      <span style="font-size:18px">2017</span>
+    </li>
+  </ul>
+</div>
+
+<ul class="weekdays">
+  <li>Su</li>
+  <li>Mo</li>
+  <li>Tu</li>
+  <li>We</li>
+  <li>Th</li>
+  <li>Fr</li>
+  <li>Sa</li>
+</ul>
+
+<ul class="days">  
+  <li div id="day1"></li>
+  <li div id="day2"></li>
+  <li div id="day3"></li>
+  <li div id="day4"></li>
+  <li div id="day5"></li>
+  <li div id="day6"></li>
+  <li div id="day7"></li>
+  <li div id="day8"></li>
+  <li div id="day9"></li>
+  <li div id="day9"></li>
+  <li div id="day10"></li>
+  <li div id="day11"></li>
+  <li div id="day12"></li>
+  <li div id="day13"></li>
+  <li div id="day14"></li>
+  <li div id="day15"></li>
+  <li div id="day16"></li>
+  <li div id="day17"></li>
+  <li div id="day18"></li>
+  <li div id="day19"></li>
+  <li div id="day20"></li>
+  <li div id="day21"></li>
+  <li div id="day22"></li>
+  <li div id="day23"></li>
+  <li div id="day24"></li>
+  <li div id="day25"></li>
+  <li div id="day26"></li>
+  <li div id="day27"></li>
+  <li div id="day28"></li>
+  <li div id="day29"></li>
+  <li div id="day30"></li>
+  <li div id="day31"></li>
+</ul>
+</div>
         <% include partials/navbar %>
     
     </div>
@@ -47,19 +184,27 @@
 // Start of myDate
 $(document).ready(function(){
 function myDate(){
-    var mydate = new Date();
-    var day = mydate.getDay();
-    var month = mydate.getMonth();
-    var year = mydate.getYear();
-    var d = mydate.getDate();
-    if (year < 1000){
-        year+=1000;
-    }if (d<10){
-        d = "0" + d;
-        var days = new Array("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
-        var months = new Array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
-        $("#datelist").html(""+days[day]+", "+months[month]+" "+d+", "+year+"");
+    function daysInMonth (month, year) { // function to find the number of days in a month
+        return new Date(year, month + 1, 0).getDate(); // add 1 to month because getMonth() returns a value of 0-11
+    } 
+    var d = new Date();
+    var wday = d.getDay();
+    var day = d.getDate();
+    var month = d.getMonth();
+    var year = d.getFullYear();
+    var d = d.getDate();
+    if (wday = 0){
+        var monthDays = daysInMonth(month, year);
+        var daysArray = new Array();
+        if (day = 1){
+            for (i = 0; i < monthDays.length; i++) {
+                daysArray[i] = i+1;
+            }
+            
+        }
+        
     }
+    
 }        
 });
 // End of myDate
