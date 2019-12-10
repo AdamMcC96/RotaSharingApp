@@ -183,31 +183,52 @@ body {font-family: Verdana, sans-serif;}
     <script>
 // Start of myDate
 $(document).ready(function(){
-function myDate(){
-    function daysInMonth (month, year) { // function to find the number of days in a month
-        return new Date(year, month + 1, 0).getDate(); // add 1 to month because getMonth() returns a value of 0-11
-    } 
-    var d = new Date();
-    var wday = d.getDay();
-    var day = d.getDate();
-    var month = d.getMonth();
-    var year = d.getFullYear();
-    var d = d.getDate();
-    if (wday = 0){
-        var monthDays = daysInMonth(month, year);
-        var daysArray = new Array();
-        if (day = 1){
-            for (i = 0; i < monthDays.length; i++) {
-                daysArray[i] = i+1;
-            }
-            
-        }
+    function myDate(){
+        function daysInMonth (month, year) { // function to find the number of days in a month
+            return new Date(year, month + 1, 0).getDate(); // add 1 to month because getMonth() returns a value of 0-11
+        } 
+        var d = new Date();
+        var wday = d.getDay();
+        var day = d.getDate();
+        var month = d.getMonth();
+        var year = d.getFullYear();
+        var d = d.getDate();
+        if (wday = 0){
+            var monthDays = daysInMonth(month, year);
+            var daysArray = new Array();
+            if (day = 1){
+                for (i = 0; i < monthDays.length; i++) {
+                    daysArray[i] = i+1;
+                    
+                } // End of for loop
+                if(monthDays.length = 30){
+                    daysArray[30] = 1;   
+                }if(monthDays.length = 28){
+                    daysArray[28] = 1;
+                    daysArray[29] = 2;
+                    daysArray[30] = 3;
+                }if(monthDays.length = 29){
+                    daysArray[29] = 1;
+                    daysArray[30] = 2;
+                }
+                else{
+                    
+                }
+            } // End of if day = 1
+            else {
+                for (i = day; i < monthDays.length; i++) {
+                    daysArray[i] = i+1;
+                    if(monthDays.length = 30){
+                        
+                    }
+                } // End of for loop
+            } // End of else
         
-    }
+        } // End of wday = 0
     
-}        
+    } // End of myDate        
 });
-// End of myDate
+
 // Start of SignUp
 $( "#signupBtn" ).click(function() { // when button #signup is clicked    
         var user = $("#usernameSign").val();
