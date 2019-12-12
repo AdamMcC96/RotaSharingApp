@@ -21,7 +21,7 @@ body {font-family: Verdana, sans-serif;}
 .month {
   padding: 70px 25px;
   width: 100%;
-  background: #1abc9c;
+  background: #b1686a;
   text-align: center;
 }
 
@@ -117,8 +117,26 @@ body {font-family: Verdana, sans-serif;}
             <input type="submit" id="signupBtn" value="Submit">
     <!--</form>-->
     </div><!-- end of signup -->
+    <div data-role="page" id="friends">
+        <div data-role="header" data-position="fixed">
+            <h1>Friends</h1>
+            <ul data-role="listview" data-icon="action" data-filter="true">
+            </ul>
+        </div><!-- end of header -->
+         <% include partials/navbar %>
+    </div><!-- end of friends -->
+          <div data-role="page" id="events">
+        <div data-role="header" data-position="fixed">
+            <h1>Events</h1>
+            <ul data-role="listview" data-icon="action" data-filter="true">
+            </ul>
+        </div><!-- end of header -->
+         <% include partials/navbar %>
+    </div><!-- end of friends -->
       <div data-role="page" id="calendar">
-        <h2>My Calendar</h2>
+        <div data-role="header" data-position="fixed">
+            <h1>My Calendar</h1>
+        </div><!-- end of header -->
         <div id="datelist">
         <div class="month">      
   <ul>
@@ -259,7 +277,7 @@ $(document).ready(function(){
                 } // End of for loop
                 var newMonthDays = 31 - monthDays;
                 var dayDiff = monthDays - day; 
-                for (i = day; i < newMonthDays; i++) {
+                for (i = 0; i < newMonthDays; i++) {
                     daysArray[dayDiff] = i+1;
                 } // End of for loop
             } // End of else
@@ -314,7 +332,7 @@ $(document).ready(function(){
         for (i = 0; i < 31; i++) {
             var allDays;
             daysArray[i] = allDays;
-            $("#day"+i).html(allDays);
+            $("#day"+i+1).html(allDays);
         } // End of for loop
    // } // End of myDate        
 });
