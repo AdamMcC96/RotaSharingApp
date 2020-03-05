@@ -134,208 +134,30 @@ body {font-family: Verdana, sans-serif;}
          <% include partials/navbar %>
     </div><!-- end of friends -->
       <div data-role="page" id="calendar">
-        <div data-role="header" data-position="fixed">
+        <div data-role="header" data-position="fixed" >
             <h1>My Calendar</h1>
         </div><!-- end of header -->
-        <div id="datelist">
-        <div class="month">      
-  <ul>
-    <li class="prev">&#10094;</li>
-    <li class="next">&#10095;</li>
-    <li><div id ="monthYear">
-      August<br>
-      <span style="font-size:18px">2017</span>
-    </div></li>
-  </ul>
-</div>
+        <div id="page-body">
+    <!-- [PERIOD SELECTOR] -->
+    <div id="cal-date">
+      <select id="cal-mth"></select>
+      <select id="cal-yr"></select>
+      <input id="cal-set" type="button" value="SET"/>
+    </div>
 
-<ul class="weekdays">
-  <li>Su</li>
-  <li>Mo</li>
-  <li>Tu</li>
-  <li>We</li>
-  <li>Th</li>
-  <li>Fr</li>
-  <li>Sa</li>
-</ul>
+    <!-- [CALENDAR] -->
+    <div id="cal-container"></div>
 
-<ul class="days">  
-  <li><div id="day1"></div></li>
-  <li><div id="day2"></div></li>
-  <li><div id="day3"></div></li>
-  <li><div id="day4"></div></li>
-  <li><div id="day5"></div></li>
-  <li><div id="day6"></div></li>
-  <li><div id="day7"></div></li>
-  <li><div id="day8"></div></li>
-  <li><div id="day9"></div></li>
-  <li><div id="day9"></div></li>
-  <li><div id="day10"></div></li>
-  <li><div id="day11"></div></li>
-  <li><div id="day12"></div></li>
-  <li><div id="day13"></div></li>
-  <li><div id="day14"></div></li>
-  <li><div id="day15"></div></li>
-  <li><div id="day16"></div></li>
-  <li><div id="day17"></div></li>
-  <li><div id="day18"></div></li>
-  <li><div id="day19"></div></li>
-  <li><div id="day20"></div></li>
-  <li><div id="day21"></div></li>
-  <li><div id="day22"></div></li>
-  <li><div id="day23"></div></li>
-  <li><div id="day24"></div></li>
-  <li><div id="day25"></div></li>
-  <li><div id="day26"></div></li>
-  <li><div id="day27"></div></li>
-  <li><div id="day28"></div></li>
-  <li><div id="day29"></div></li>
-  <li><div id="day30"></div></li>
-  <li><div id="day31"></div></li>
-</ul>
-</div>
+    <!-- [EVENT] -->
+    <div id="cal-event"></div>
+  </div>
+
         <% include partials/navbar %>
     
     </div>
     </body>
     <script>
 // Start of myDate
-$(document).ready(function(){
-    //function myDate(){
-    console.log("My Date");
-        function daysInMonth (month, year) { // function to find the number of days in a month
-            return new Date(year, month, 0).getDate(); // add 1 to month because getMonth() returns a value of 0-11
-        } 
-        var d = new Date();
-        var wday = d.getDay();
-        var day = d.getDate();
-        var month = d.getMonth();
-        month = month + 1;
-        var year = d.getFullYear();
-        var d = d.getDate();
-        var monthDays = daysInMonth(month, year);
-        var daysArray = new Array();
-        var monthText = "";
-        if (month === 1){
-            monthText = "January";
-        }if (month === 2){
-            monthText = "February";
-        }if (month === 3){
-            monthText = "March";
-        }if (month === 4){
-            monthText = "April";
-        }if (month === 5){
-            monthText = "May";
-        }if (month === 6){
-            monthText = "June";
-        }if (month === 7){
-            monthText = "July";
-        }if (month === 8){
-            monthText = "August";
-        }if (month === 9){
-            monthText = "September";
-        }if (month === 10){
-            monthText = "October";
-        }if (month === 11){
-            monthText = "November";
-        }if (month === 12){
-            monthText = "December";
-        }
-        $("#monthYear").html(monthText + "<br><span style='font-size:18px'>" + year + "</span>");
-        
-        console.log("Current Date: " + day +"/"+ month + "/" + year + " Days;" + monthDays);
-        if (wday = 0){
-            console.log("wday = 0");
-
-            if (day = 1){
-                console.log("day = 1");
-                for (i = 0; i < monthDays; i++) {
-                    daysArray[i] = i+1;
-                    
-                } // End of for loop
-                if(monthDays === 30){
-                    console.log("monthDays  30");
-                    daysArray[30] = 1;   
-                }if(monthDays === 28){
-                    console.log("monthDays  28");
-                    daysArray[28] = 1;
-                    daysArray[29] = 2;
-                    daysArray[30] = 3;
-                }if(monthDays === 29){
-                    console.log("monthDays  29");
-                    daysArray[29] = 1;
-                    daysArray[30] = 2;
-                }
-                if(monthDays === 31){
-                    console.log("else (monthday) + monthDays");
-                }
-            } // End of if day = 1
-            else {
-                console.log("day != 1");
-                for (i = day; i < monthDays; i++) {
-                    daysArray[i] = i+1;
-                } // End of for loop
-                var newMonthDays = 31 - monthDays;
-                var dayDiff = monthDays - day; 
-                for (i = 0; i < newMonthDays; i++) {
-                    daysArray[dayDiff] = i+1;
-                } // End of for loop
-            } // End of else
-        
-        } // End of wday = 0
-        else{
-            console.log("wday != 0");
-            var prevMonthDays = daysInMonth(month-1, year);
-            
-            if (day = 1){
-                console.log("day = 1" + day);
-                for (i = 0; i < wday; i++) {
-                    var lmonthDays = prevMonthDays - (wday - i);
-                    daysArray[i] = lmonthDays;
-                    
-                } // End of for loop 
-                for (i = 0; i < monthDays; i++) {
-                    daysArray[i] = i+1;
-                    
-                } // End of for loop
-                if(monthDays === 30){
-                    console.log("monthDays  30" + monthDays);
-                    daysArray[30] = 1;   
-                }if(monthDays === 28){
-                    console.log("monthDays  28" + monthDays);
-                    daysArray[28] = 1;
-                    daysArray[29] = 2;
-                    daysArray[30] = 3;
-                }if(monthDays === 29){
-                    console.log("monthDays  29" + monthDays);
-                    daysArray[29] = 1;
-                    daysArray[30] = 2;
-                }
-                if (monthDays === 31){
-                    console.log("else(monthDays)" + monthDays);
-                }
-            } // End of if day = 1
-            else {
-                console.log("day != 1");
-                var sunday = day - wday;
-                for (i = sunday; i < monthDays; i++) {
-                    daysArray[i] = i+1;
-                } // End of for loop
-                var newMonthDays = 31 - monthDays;
-                var dayDiff = monthDays - day; 
-                for (i = day; i < newMonthDays; i++) {
-                    daysArray[dayDiff] = i+1;
-                } // End of for loop
-            } // End of else
-        
-        } // end of else
-        for (i = 0; i < 31; i++) {
-            var allDays;
-            daysArray[i] = allDays;
-            $("#day"+i+1).html(allDays);
-        } // End of for loop
-   // } // End of myDate        
-});
 
 // Start of SignUp
 $( "#signupBtn" ).click(function() { // when button #signup is clicked    
@@ -390,7 +212,195 @@ $( "#loginBtn" ).click(function() { // when button #loginform is clicked
 });
 // End of Login  
         
+// start of Calendar
+        var cal = {
+  /* [PROPERTIES] */
+  monthName : ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], // Month Names
+  data : null, // Events for the selected period
+  sDay : 0, // Current selected day
+  sMth : 0, // Current selected month
+  sYear : 0, // Current selected year
+  sMon : false, // Week start on Monday?
 
+  /* [FUNCTIONS] */
+  list : function () {
+  // cal.list() : draw the calendar for the given month
+
+    // BASIC CALCULATIONS
+    // Note - Jan is 0 & Dec is 11 in JS.
+    // Note - Sun is 0 & Sat is 6
+    cal.sMth = parseInt(document.getElementById("cal-mth").value); // selected month
+    cal.sYear = parseInt(document.getElementById("cal-yr").value); // selected year
+    var daysInMth = new Date(cal.sYear, cal.sMth+1, 0).getDate(), // number of days in selected month
+        startDay = new Date(cal.sYear, cal.sMth, 1).getDay(), // first day of the month
+        endDay = new Date(cal.sYear, cal.sMth, daysInMth).getDay(); // last day of the month
+
+    // LOAD DATA FROM LOCALSTORAGE
+    cal.data = localStorage.getItem("cal-" + cal.sMth + "-" + cal.sYear);
+    if (cal.data==null) {
+      localStorage.setItem("cal-" + cal.sMth + "-" + cal.sYear, "{}");
+      cal.data = {};
+    } else {
+      cal.data = JSON.parse(cal.data);
+    }
+
+    // DRAWING CALCULATIONS
+    // Determine the number of blank squares before start of month
+    var squares = [];
+    if (cal.sMon && startDay != 1) {
+      var blanks = startDay==0 ? 7 : startDay ;
+      for (var i=1; i<blanks; i++) { squares.push("b"); }
+    }
+    if (!cal.sMon && startDay != 0) {
+      for (var i=0; i<startDay; i++) { squares.push("b"); }
+    }
+
+    // Populate the days of the month
+    for (var i=1; i<=daysInMth; i++) { squares.push(i); }
+
+    // Determine the number of blank squares after end of month
+    if (cal.sMon && endDay != 0) {
+      var blanks = endDay==6 ? 1 : 7-endDay;
+      for (var i=0; i<blanks; i++) { squares.push("b"); }
+    }
+    if (!cal.sMon && endDay != 6) {
+      var blanks = endDay==0 ? 6 : 6-endDay;
+      for (var i=0; i<blanks; i++) { squares.push("b"); }
+    }
+
+    // DRAW HTML
+    // Container & Table
+    var container = document.getElementById("cal-container"),
+        cTable = document.createElement("table");
+    cTable.id = "calendar";
+    container.innerHTML = "";
+    container.appendChild(cTable);
+
+    // First row - Days
+    var cRow = document.createElement("tr"),
+        cCell = null,
+        days = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
+    if (cal.sMon) { days.push(days.shift()); }
+    for (var d of days) {
+      cCell = document.createElement("td");
+      cCell.innerHTML = d;
+      cRow.appendChild(cCell);
+    }
+    cRow.classList.add("head");
+    cTable.appendChild(cRow);
+
+    // Days in Month
+    var total = squares.length;
+    cRow = document.createElement("tr");
+    cRow.classList.add("day");
+    for (var i=0; i<total; i++) {
+      cCell = document.createElement("td");
+      if (squares[i]=="b") { cCell.classList.add("blank"); }
+      else {
+        cCell.innerHTML = "<div class='dd'>"+squares[i]+"</div>";
+        if (cal.data[squares[i]]) {
+          cCell.innerHTML += "<div class='evt'>" + cal.data[squares[i]] + "</div>";
+        }
+        cCell.addEventListener("click", function(){
+          cal.show(this);
+        });
+      }
+      cRow.appendChild(cCell);
+      if (i!=0 && (i+1)%7==0) {
+        cTable.appendChild(cRow);
+        cRow = document.createElement("tr");
+        cRow.classList.add("day");
+      }
+    }
+
+    // REMOVE ANY ADD/EDIT EVENT DOCKET
+    cal.close();
+  },
+
+  show : function (el) {
+  // cal.show() : show edit event docket for selected day
+  // PARAM el : Reference back to cell clicked
+
+    // FETCH EXISTING DATA
+    cal.sDay = el.getElementsByClassName("dd")[0].innerHTML;
+
+    // DRAW FORM
+    var tForm = "<h1>" + (cal.data[cal.sDay] ? "EDIT" : "ADD") + " EVENT</h1>";
+    tForm += "<div id='evt-date'>" + cal.sDay + " " + cal.monthName[cal.sMth] + " " + cal.sYear + "</div>";
+    tForm += "<textarea id='evt-details' required>" + (cal.data[cal.sDay] ? cal.data[cal.sDay] : "") + "</textarea>";
+    tForm += "<input type='button' value='Close' onclick='cal.close()'/>";
+    tForm += "<input type='button' value='Delete' onclick='cal.del()'/>";
+    tForm += "<input type='submit' value='Save'/>";
+
+    // ATTACH
+    var eForm = document.createElement("form");
+    eForm.addEventListener("submit", cal.save);
+    eForm.innerHTML = tForm;
+    var container = document.getElementById("cal-event");
+    container.innerHTML = "";
+    container.appendChild(eForm);
+  },
+
+  close : function () {
+  // cal.close() : close event docket
+
+    document.getElementById("cal-event").innerHTML = "";
+  },
+
+  save : function (evt) {
+  // cal.save() : save event
+
+    evt.stopPropagation();
+    evt.preventDefault();
+    cal.data[cal.sDay] = document.getElementById("evt-details").value;
+    localStorage.setItem("cal-" + cal.sMth + "-" + cal.sYear, JSON.stringify(cal.data));
+    cal.list();
+  },
+
+  del : function () {
+  // cal.del() : Delete event for selected date
+
+    if (confirm("Remove event?")) {
+      delete cal.data[cal.sDay];
+      localStorage.setItem("cal-" + cal.sMth + "-" + cal.sYear, JSON.stringify(cal.data));
+      cal.list();
+    }
+  }
+};
+
+// INIT - DRAW MONTH & YEAR SELECTOR
+window.addEventListener("load", function () {
+  // DATE NOW
+  var now = new Date(),
+      nowMth = now.getMonth(),
+      nowYear = parseInt(now.getFullYear());
+
+  // APPEND MONTHS SELECTOR
+  var month = document.getElementById("cal-mth");
+  for (var i = 0; i < 12; i++) {
+    var opt = document.createElement("option");
+    opt.value = i;
+    opt.innerHTML = cal.monthName[i];
+    if (i==nowMth) { opt.selected = true; }
+    month.appendChild(opt);
+  }
+
+  // APPEND YEARS SELECTOR
+  // Set to 10 years range. Change this as you like.
+  var year = document.getElementById("cal-yr");
+  for (var i = nowYear-10; i<=nowYear+10; i++) {
+    var opt = document.createElement("option");
+    opt.value = i;
+    opt.innerHTML = i;
+    if (i==nowYear) { opt.selected = true; }
+    year.appendChild(opt);
+  }
+
+  // START - DRAW CALENDAR
+  document.getElementById("cal-set").addEventListener("click", cal.list);
+  cal.list();
+});
+// end of Calendar
 </script>
 
 </html>
