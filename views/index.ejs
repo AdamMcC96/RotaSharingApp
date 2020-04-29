@@ -2,109 +2,172 @@
 <html>
 <head>
 <meta charset="utf-8">
-        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, width=device-width">
+
         <title>Rota App</title>
+        <style>
+            * {box-sizing: border-box;}
+            ul {list-style-type: none;}
+            body {font-family: Verdana, sans-serif;}
+            
+            .month {
+              padding: 70px 25px;
+              width: 100%;
+              background: #1abc9c;
+              text-align: center;
+            }
+            
+            .month ul {
+              margin: 0;
+              padding: 0;
+            }
+            
+            .month ul li {
+              color: white;
+              font-size: 20px;
+              text-transform: uppercase;
+              letter-spacing: 3px;
+            }
+            
+            .month .prev {
+              float: left;
+              padding-top: 10px;
+            }
+            
+            .month .next {
+              float: right;
+              padding-top: 10px;
+            }
+            
+            .weekdays {
+              margin: 0;
+              padding: 10px 0;
+              background-color: #ddd;
+            }
+            
+            .weekdays li {
+              display: inline-block;
+              width: 13.6%;
+              color: #666;
+              text-align: center;
+            }
+            
+            .days {
+              padding: 10px 0;
+              background: #eee;
+              margin: 0;
+            }
+            
+            .days li {
+              list-style-type: none;
+              display: inline-block;
+              width: 13.6%;
+              text-align: center;
+              margin-bottom: 5px;
+              font-size:12px;
+              color: #777;
+            }
+            
+            .days li .active {
+              padding: 5px;
+              background: #1abc9c;
+              color: white !important
+            }
+            
+            /* Add media queries for smaller screens */
+            @media screen and (max-width:720px) {
+              .weekdays li, .days li {width: 13.1%;}
+            }
+            
+            @media screen and (max-width: 420px) {
+              .weekdays li, .days li {width: 12.5%;}
+              .days li .active {padding: 2px;}
+            }
+            
+            @media screen and (max-width: 290px) {
+              .weekdays li, .days li {width: 12.2%;}
+            }
+            </style>
 <link rel="stylesheet" href="themes/groupapp.min.css" />
 <link rel="stylesheet" href="themes/jquery.mobile.icons.min.css" />
 <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile.structure-1.4.5.min.css" />
 <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://rawgithub.com/arschmitz/jquery-mobile-datepicker-wrapper/master/jquery.mobile.datepicker.css" />
+
+  <script src="http://code.jquery.com/jquery-1.9.1.js"></script> 
+  <script src="https://rawgithub.com/jquery/jquery-ui/1-10-stable/ui/jquery.ui.datepicker.js"></script>
+  <script src="http://code.jquery.com/mobile/git/jquery.mobile-git.js"></script> 
+  <script src="https://rawgithub.com/arschmitz/jquery-mobile-datepicker-wrapper/master/jquery.mobile.datepicker.js"></script>
+  <script src="https://rawgithub.com/arschmitz/jquery-mobile-datepicker-wrapper/master/jquery.mobile.datepicker.js"></script>
+
+<!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<style>
-* {box-sizing: border-box;}
-ul {list-style-type: none;}
-body {font-family: Verdana, sans-serif;}
-
-.month {
-  padding: 70px 25px;
-  width: 100%;
-  background: #b1686a;
-  text-align: center;
-}
-
-.month ul {
-  margin: 0;
-  padding: 0;
-}
-
-.month ul li {
-  color: white;
-  font-size: 20px;
-  text-transform: uppercase;
-  letter-spacing: 3px;
-}
-
-.month .prev {
-  float: left;
-  padding-top: 10px;
-}
-
-.month .next {
-  float: right;
-  padding-top: 10px;
-}
-
-.weekdays {
-  margin: 0;
-  padding: 10px 0;
-  background-color: #ddd;
-}
-
-.weekdays li {
-  display: inline-block;
-  width: 13.6%;
-  color: #666;
-  text-align: center;
-}
-
-.days {
-  padding: 10px 0;
-  background: #eee;
-  margin: 0;
-}
-
-.days li {
-  list-style-type: none;
-  display: inline-block;
-  width: 13.6%;
-  text-align: center;
-  margin-bottom: 5px;
-  font-size:12px;
-  color: #777;
-}
-
-.days li .active {
-  padding: 5px;
-  background: #1abc9c;
-  color: white !important
-}
-
-/* Add media queries for smaller screens */
-@media screen and (max-width:720px) {
-  .weekdays li, .days li {width: 13.1%;}
-}
-
-@media screen and (max-width: 420px) {
-  .weekdays li, .days li {width: 12.5%;}
-  .days li .active {padding: 2px;}
-}
-
-@media screen and (max-width: 290px) {
-  .weekdays li, .days li {width: 12.2%;}
-}
-</style>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>-->
+<script>
+  function genDays(addon){
+    console.log("genDays start");
+  var weekday = new Array(7);
+        weekday[0] = "Sunday";
+        weekday[1] = "Monday";
+        weekday[2] = "Tuesday";
+        weekday[3] = "Wednesday";
+        weekday[4] = "Thursday";
+        weekday[5] = "Friday";
+        weekday[6] = "Saturday";
+        for (var j = 0; j < 7; i++) {
+          document.getElementById("day" + j).innerHTML = "";
+        }
+        var d8 = new Date();
+        var curyear = d8.getFullYear();
+        var curmnth = d8.getMonth() + addon;
+        var firstday = new Date(curyear + "-" + curmnth + "-01").getDay();
+        var textday;
+        switch(firstday){
+          case 0:
+            textday = weekday[0];
+            break;
+          case 1:
+            textday = weekday[1];
+            break;
+          case 2:
+            textday = weekday[2];
+            break;
+          case 3:
+            textday = weekday[3];
+            break;
+          case 4:
+            textday = weekday[4];
+            break;
+          case 5:
+            textday = weekday[5];
+            break;
+          case 6:
+            textday = weekday[6];
+        }
+        function daysInMonth (month, year) {
+          return new Date(year, month, 0).getDate();
+        }
+        console.log("First day: " + textday + firstday);
+        var mnthDays = daysInMonth(curmnth, curyear);
+        console.log(mnthDays);
+        var totalDay = mnthDays + 1;
+        var dayLoop;
+        for (var i = 1; i < totalDay; i++) {
+          dayLoop = firstday + i - 1;
+          document.getElementById("day" + dayLoop).innerHTML = i;
+          
+        }
+  }
+</script>
   </head>
   <body>
     <div data-role="page" id="loginpage">
-        <!--<form action="/login" method="post">-->
             Username: <input type="text" id="usernameLog" name="username">
             Password: <input type="password" id="passwordLog" name="password">
-            <input type="submit" id="loginBtn" value="Login">
-        <!--</form>-->
-  <p>Don't have an account? <a href="#signuppage">Sign Up</a>!</p>
+        <button type="submit" id="loginBtn" value="Login">Login</button>
+        <p>Don't have an account? <a href="#signuppage">Sign Up</a>!</p>
     </div><!-- end of userloggedout -->
       
     <div data-role="page" id="signuppage">
@@ -114,8 +177,8 @@ body {font-family: Verdana, sans-serif;}
             Last Name: <input type="text" id="lnameSign" name="lname">
             E-mail: <input type="email" id="emailSign" name="email">
             Password: <input type="password" id="passwordSign" name="password">
-            <input type="submit" id="signupBtn" value="Submit">
-    <!--</form>-->
+        <button type="submit" id="signupBtn" value="Submit">Submit</button>
+        <!--</form>-->
     </div><!-- end of signup -->
     <div data-role="page" id="friends">
         <div data-role="header" data-position="fixed">
@@ -135,29 +198,124 @@ body {font-family: Verdana, sans-serif;}
     </div><!-- end of friends -->
       <div data-role="page" id="calendar">
         <div data-role="header" data-position="fixed" >
-            <h1>My Calendar</h1>
+            <h1>My Calendar <a href="#calendar2">Calendar</a></h1>
         </div><!-- end of header -->
-        <div id="page-body">
-    <!-- [PERIOD SELECTOR] -->
-    <div id="cal-date">
-      <select id="cal-mth"></select>
-      <select id="cal-yr"></select>
-      <input id="cal-set" type="button" value="SET"/>
-    </div>
-
-    <!-- [CALENDAR] -->
-    <div id="cal-container"></div>
-
-    <!-- [EVENT] -->
-    <div id="cal-event"></div>
-  </div>
-
-        <% include partials/navbar %>
+          <input type="text" data-role="date" data-inline="true" id="CLNDR">
+          
+          <% include partials/navbar %>
     
+    </div>
+    <div data-role="page" id="calendar2">
+    <div class="month">      
+        <ul>
+          <li id="prev">&#10094;</li>
+          <li id="next">&#10095;</li>
+          <li>
+            <%  function getMonthText(mnth){
+                console.log(mnth);
+                var textMnth;
+            switch(mnth){
+                case 0:
+                    textMnth = "January";
+                    break;
+                case 1:
+                   textMnth = "February";
+                   break; 
+                case 2:
+                    textMnth = "March";
+                    break;
+                case 3:
+                    textMnth = "April";
+                    break;
+                case 4:
+                    textMnth = "May";
+                    break;
+                case 5:
+                   textMnth = "June";
+                   break; 
+                case 6:
+                    textMnth = "July";
+                    break;
+                case 7:
+                    textMnth = "August";
+                    break;
+                case 8:
+                    textMnth = "September";
+                    break;
+                case 9:
+                   textMnth = "October";
+                   break; 
+                case 10:
+                    textMnth = "November";
+                    break;
+                case 11:
+                    textMnth = "December";
+            }
+                console.log(textMnth);
+                return textMnth;
+            } var d = new Date(); var mnth = d.getMonth();  %>
+            <%= getMonthText(mnth); %>
+            <br>
+            <span style="font-size:18px"><%= d.getFullYear(); %></span>
+          </li>
+        </ul>
+      </div>
+      
+      <ul class="weekdays">
+        <li>Su</li>
+        <li>Mo</li>
+        <li>Tu</li>
+        <li>We</li>
+        <li>Th</li>
+        <li>Fr</li>
+        <li>Sa</li>
+      </ul>
+      
+      <ul class="days">
+        <li id="day0"></li>
+        <li id="day1"></li>
+        <li id="day2"></li>
+        <li id="day3"></li>
+        <li id="day4"></li>
+        <li id="day5"></li>
+        <li id="day6"></li>
+        <li id="day7"></li>
+        <li id="day8"></li>
+        <li id="day9"></li>
+        <li id="day10"></li>
+        <li id="day11"></li>
+        <li id="day12"></li>
+        <li id="day13"></li>
+        <li id="day14"></li>
+        <li id="day15"></li>
+        <li id="day16"></li>
+        <li id="day17"></li>
+        <li id="day18"></li>
+        <li id="day19"></li>
+        <li id="day20"></li>
+        <li id="day21"></li>
+        <li id="day22"></li>
+        <li id="day23"></li>
+        <li id="day24"></li>
+        <li id="day25"></li>
+        <li id="day26"></li>
+        <li id="day27"></li>
+        <li id="day28"></li>
+        <li id="day29"></li>
+        <li id="day30"></li>
+        <li id="day31"></li>
+        <li id="day32"></li>
+        <li id="day33"></li>
+        <li id="day34"></li>
+        <li id="day35"></li>
+        <li id="day36"></li>
+        <li id="day37"></li>
+      </ul>
+      <% include partials/navbar %>
     </div>
     </body>
     <script>
-// Start of myDate
+
 
 // Start of SignUp
 $( "#signupBtn" ).click(function() { // when button #signup is clicked    
@@ -189,11 +347,15 @@ $( "#loginBtn" ).click(function() { // when button #loginform is clicked
     var username = $("#usernameLog").val();
     var password = $("#passwordLog").val();
     console.log("submit login");
+    var addonday = 1;
+    genDays(addonday);
     $.post( "/login", { username : username, password : password }).done(function( data ) {
         console.log(data);
         //myDate();
         if (data == username){
             console.log("WIN!!");
+
+
     
             window.location = "/#calendar";
             
@@ -211,196 +373,22 @@ $( "#loginBtn" ).click(function() { // when button #loginform is clicked
          
 });
 // End of Login  
-        
-// start of Calendar
-        var cal = {
-  /* [PROPERTIES] */
-  monthName : ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], // Month Names
-  data : null, // Events for the selected period
-  sDay : 0, // Current selected day
-  sMth : 0, // Current selected month
-  sYear : 0, // Current selected year
-  sMon : false, // Week start on Monday?
-
-  /* [FUNCTIONS] */
-  list : function () {
-  // cal.list() : draw the calendar for the given month
-
-    // BASIC CALCULATIONS
-    // Note - Jan is 0 & Dec is 11 in JS.
-    // Note - Sun is 0 & Sat is 6
-    cal.sMth = parseInt(document.getElementById("cal-mth").value); // selected month
-    cal.sYear = parseInt(document.getElementById("cal-yr").value); // selected year
-    var daysInMth = new Date(cal.sYear, cal.sMth+1, 0).getDate(), // number of days in selected month
-        startDay = new Date(cal.sYear, cal.sMth, 1).getDay(), // first day of the month
-        endDay = new Date(cal.sYear, cal.sMth, daysInMth).getDay(); // last day of the month
-
-    // LOAD DATA FROM LOCALSTORAGE
-    cal.data = localStorage.getItem("cal-" + cal.sMth + "-" + cal.sYear);
-    if (cal.data==null) {
-      localStorage.setItem("cal-" + cal.sMth + "-" + cal.sYear, "{}");
-      cal.data = {};
-    } else {
-      cal.data = JSON.parse(cal.data);
-    }
-
-    // DRAWING CALCULATIONS
-    // Determine the number of blank squares before start of month
-    var squares = [];
-    if (cal.sMon && startDay != 1) {
-      var blanks = startDay==0 ? 7 : startDay ;
-      for (var i=1; i<blanks; i++) { squares.push("b"); }
-    }
-    if (!cal.sMon && startDay != 0) {
-      for (var i=0; i<startDay; i++) { squares.push("b"); }
-    }
-
-    // Populate the days of the month
-    for (var i=1; i<=daysInMth; i++) { squares.push(i); }
-
-    // Determine the number of blank squares after end of month
-    if (cal.sMon && endDay != 0) {
-      var blanks = endDay==6 ? 1 : 7-endDay;
-      for (var i=0; i<blanks; i++) { squares.push("b"); }
-    }
-    if (!cal.sMon && endDay != 6) {
-      var blanks = endDay==0 ? 6 : 6-endDay;
-      for (var i=0; i<blanks; i++) { squares.push("b"); }
-    }
-
-    // DRAW HTML
-    // Container & Table
-    var container = document.getElementById("cal-container"),
-        cTable = document.createElement("table");
-    cTable.id = "calendar";
-    container.innerHTML = "";
-    container.appendChild(cTable);
-
-    // First row - Days
-    var cRow = document.createElement("tr"),
-        cCell = null,
-        days = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
-    if (cal.sMon) { days.push(days.shift()); }
-    for (var d of days) {
-      cCell = document.createElement("td");
-      cCell.innerHTML = d;
-      cRow.appendChild(cCell);
-    }
-    cRow.classList.add("head");
-    cTable.appendChild(cRow);
-
-    // Days in Month
-    var total = squares.length;
-    cRow = document.createElement("tr");
-    cRow.classList.add("day");
-    for (var i=0; i<total; i++) {
-      cCell = document.createElement("td");
-      if (squares[i]=="b") { cCell.classList.add("blank"); }
-      else {
-        cCell.innerHTML = "<div class='dd'>"+squares[i]+"</div>";
-        if (cal.data[squares[i]]) {
-          cCell.innerHTML += "<div class='evt'>" + cal.data[squares[i]] + "</div>";
-        }
-        cCell.addEventListener("click", function(){
-          cal.show(this);
-        });
-      }
-      cRow.appendChild(cCell);
-      if (i!=0 && (i+1)%7==0) {
-        cTable.appendChild(cRow);
-        cRow = document.createElement("tr");
-        cRow.classList.add("day");
-      }
-    }
-
-    // REMOVE ANY ADD/EDIT EVENT DOCKET
-    cal.close();
-  },
-
-  show : function (el) {
-  // cal.show() : show edit event docket for selected day
-  // PARAM el : Reference back to cell clicked
-
-    // FETCH EXISTING DATA
-    cal.sDay = el.getElementsByClassName("dd")[0].innerHTML;
-
-    // DRAW FORM
-    var tForm = "<h1>" + (cal.data[cal.sDay] ? "EDIT" : "ADD") + " EVENT</h1>";
-    tForm += "<div id='evt-date'>" + cal.sDay + " " + cal.monthName[cal.sMth] + " " + cal.sYear + "</div>";
-    tForm += "<textarea id='evt-details' required>" + (cal.data[cal.sDay] ? cal.data[cal.sDay] : "") + "</textarea>";
-    tForm += "<input type='button' value='Close' onclick='cal.close()'/>";
-    tForm += "<input type='button' value='Delete' onclick='cal.del()'/>";
-    tForm += "<input type='submit' value='Save'/>";
-
-    // ATTACH
-    var eForm = document.createElement("form");
-    eForm.addEventListener("submit", cal.save);
-    eForm.innerHTML = tForm;
-    var container = document.getElementById("cal-event");
-    container.innerHTML = "";
-    container.appendChild(eForm);
-  },
-
-  close : function () {
-  // cal.close() : close event docket
-
-    document.getElementById("cal-event").innerHTML = "";
-  },
-
-  save : function (evt) {
-  // cal.save() : save event
-
-    evt.stopPropagation();
-    evt.preventDefault();
-    cal.data[cal.sDay] = document.getElementById("evt-details").value;
-    localStorage.setItem("cal-" + cal.sMth + "-" + cal.sYear, JSON.stringify(cal.data));
-    cal.list();
-  },
-
-  del : function () {
-  // cal.del() : Delete event for selected date
-
-    if (confirm("Remove event?")) {
-      delete cal.data[cal.sDay];
-      localStorage.setItem("cal-" + cal.sMth + "-" + cal.sYear, JSON.stringify(cal.data));
-      cal.list();
-    }
-  }
-};
-
-// INIT - DRAW MONTH & YEAR SELECTOR
-window.addEventListener("load", function () {
-  // DATE NOW
-  var now = new Date(),
-      nowMth = now.getMonth(),
-      nowYear = parseInt(now.getFullYear());
-
-  // APPEND MONTHS SELECTOR
-  var month = document.getElementById("cal-mth");
-  for (var i = 0; i < 12; i++) {
-    var opt = document.createElement("option");
-    opt.value = i;
-    opt.innerHTML = cal.monthName[i];
-    if (i==nowMth) { opt.selected = true; }
-    month.appendChild(opt);
-  }
-
-  // APPEND YEARS SELECTOR
-  // Set to 10 years range. Change this as you like.
-  var year = document.getElementById("cal-yr");
-  for (var i = nowYear-10; i<=nowYear+10; i++) {
-    var opt = document.createElement("option");
-    opt.value = i;
-    opt.innerHTML = i;
-    if (i==nowYear) { opt.selected = true; }
-    year.appendChild(opt);
-  }
-
-  // START - DRAW CALENDAR
-  document.getElementById("cal-set").addEventListener("click", cal.list);
-  cal.list();
+// start of prev
+$( "#prev" ).click(function() {
+  var prevadd = -1;
+  genDays(prevadd);
 });
-// end of Calendar
+// end of prev
+// start of next
+$( "#next" ).click(function() {
+  var nextadd = 2;
+  genDays(nextadd);
+});
+$("#CLNDR").click(function() {
+    var calValue = $("#CLNDR").val();
+    var cal2 = $("#CLNDR").getDate;
+    console.log(cal2);
+});
 </script>
 
 </html>

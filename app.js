@@ -4,7 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var expressSession = require('express-session'); // session 
 var bcrypt = require('bcryptjs');
-var logger = require('morgan');
+var morgan = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -15,7 +15,7 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-app.use(logger('dev'));
+app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -139,6 +139,42 @@ app.post('/login',function(req,res){
 
 }); // end of /login
 
+/*
+// start of /getDateData
+app.post('/getDateData',function(req,res){
+    var username = req.session.username; // gets the user's username from the session
+    var eventMonth = req.body.eventMonth;
+    var eventYear = req.body.eventYear;
+    var eventDay = req.body.eventDay;
+    
+    var mysql = require('mysql')
+        var connection = mysql.createConnection({
+          host     : 'localhost',
+          user     : 'root',
+          password : 'root',
+          database : 'rota'
+        });
+
+        connection.connect();
+    
+    var sql = "select * from rota.events where username = '"+username+"' and eventMonth = '"+eventMonth+"' and eventYear = '"+eventYear"' and eventDay = '"+eventDay+"'";
+    console.log(sql);
+    
+    var eventName = "";
+    var id ="";
+    connection.query(sql, function (err, rows, fields) {
+        for(var j=0; j< rows.length; j++){
+            id = rows[j].id;
+            eventName = eventName + '<a data-ajax="false" href="/event?id=' + id + '">' + rows[j].eventName + "</a><br>";
+            
+        }
+        res.send(eventName);
+    });
+    
+    
+    
+}); // end of /getDateData
+*/
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 

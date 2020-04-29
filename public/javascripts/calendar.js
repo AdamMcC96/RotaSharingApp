@@ -20,15 +20,6 @@ var cal = {
         startDay = new Date(cal.sYear, cal.sMth, 1).getDay(), // first day of the month
         endDay = new Date(cal.sYear, cal.sMth, daysInMth).getDay(); // last day of the month
 
-    // LOAD DATA FROM LOCALSTORAGE
-    cal.data = localStorage.getItem("cal-" + cal.sMth + "-" + cal.sYear);
-    if (cal.data==null) {
-      localStorage.setItem("cal-" + cal.sMth + "-" + cal.sYear, "{}");
-      cal.data = {};
-    } else {
-      cal.data = JSON.parse(cal.data);
-    }
-
     // DRAWING CALCULATIONS
     // Determine the number of blank squares before start of month
     var squares = [];
@@ -100,56 +91,7 @@ var cal = {
 
     // REMOVE ANY ADD/EDIT EVENT DOCKET
     cal.close();
-  },
-
-  show : function (el) {
-  // cal.show() : show edit event docket for selected day
-  // PARAM el : Reference back to cell clicked
-
-    // FETCH EXISTING DATA
-    cal.sDay = el.getElementsByClassName("dd")[0].innerHTML;
-
-    // DRAW FORM
-    var tForm = "<h1>" + (cal.data[cal.sDay] ? "EDIT" : "ADD") + " EVENT</h1>";
-    tForm += "<div id='evt-date'>" + cal.sDay + " " + cal.mName[cal.sMth] + " " + cal.sYear + "</div>";
-    tForm += "<textarea id='evt-details' required>" + (cal.data[cal.sDay] ? cal.data[cal.sDay] : "") + "</textarea>";
-    tForm += "<input type='button' value='Close' onclick='cal.close()'/>";
-    tForm += "<input type='button' value='Delete' onclick='cal.del()'/>";
-    tForm += "<input type='submit' value='Save'/>";
-
-    // ATTACH
-    var eForm = document.createElement("form");
-    eForm.addEventListener("submit", cal.save);
-    eForm.innerHTML = tForm;
-    var container = document.getElementById("cal-event");
-    container.innerHTML = "";
-    container.appendChild(eForm);
-  },
-
-  close : function () {
-  // cal.close() : close event docket
-
-    document.getElementById("cal-event").innerHTML = "";
-  },
-
-  save : function (evt) {
-  // cal.save() : save event
-
-    evt.stopPropagation();
-    evt.preventDefault();
-    cal.data[cal.sDay] = document.getElementById("evt-details").value;
-    localStorage.setItem("cal-" + cal.sMth + "-" + cal.sYear, JSON.stringify(cal.data));
-    cal.list();
-  },
-
-  del : function () {
-  // cal.del() : Delete event for selected date
-
-    if (confirm("Remove event?")) {
-      delete cal.data[cal.sDay];
-      localStorage.setItem("cal-" + cal.sMth + "-" + cal.sYear, JSON.stringify(cal.data));
-      cal.list();
-    }
+  }
   }
 };
 

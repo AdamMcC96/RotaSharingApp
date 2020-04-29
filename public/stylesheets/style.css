@@ -22,7 +22,7 @@ a {
 /* [CALENDAR] */
 #calendar {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate ;
 }
 #calendar tr.head td {
   font-weight: bold;
