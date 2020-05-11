@@ -95,7 +95,6 @@
 <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
   <link rel="stylesheet" href="https://rawgithub.com/arschmitz/jquery-mobile-datepicker-wrapper/master/jquery.mobile.datepicker.css" />
 
-  <script src="http://code.jquery.com/jquery-1.9.1.js"></script> 
   <script src="https://rawgithub.com/jquery/jquery-ui/1-10-stable/ui/jquery.ui.datepicker.js"></script>
   <script src="http://code.jquery.com/mobile/git/jquery.mobile-git.js"></script> 
   <script src="https://rawgithub.com/arschmitz/jquery-mobile-datepicker-wrapper/master/jquery.mobile.datepicker.js"></script>
@@ -106,7 +105,72 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>-->
 <script>
-  function genDays(addon){
+  function resetDays(){
+    for (var i = 0; i < 37; i++) {
+          
+          document.getElementById("day" + i).innerHTML = "";
+          
+        }
+  }
+  function getMonthText(mnth, yer){
+                console.log(mnth);
+                var textMnth;
+            switch(mnth){
+                case 0:
+                    yer = yer - 1;
+                    console.log(yer);
+                    document.getElementById("spanyear").innerHTML = yer;
+                    mnth = 12;
+                    textMnth = "December";
+                    break;
+                case 1:
+                    textMnth = "January";
+                    break;
+                case 2:
+                   textMnth = "February";
+                   break; 
+                case 3:
+                    textMnth = "March";
+                    break;
+                case 4:
+                    textMnth = "April";
+                    break;
+                case 5:
+                    textMnth = "May";
+                    break;
+                case 6:
+                   textMnth = "June";
+                   break; 
+                case 7:
+                    textMnth = "July";
+                    break;
+                case 8:
+                    textMnth = "August";
+                    break;
+                case 9:
+                    textMnth = "September";
+                    break;
+                case 10:
+                   textMnth = "October";
+                   break; 
+                case 11:
+                    textMnth = "November";
+                    break;
+                case 12:
+                    textMnth = "December";
+                    break;
+                case 13:
+                    yer = yer + 1; 
+                    document.getElementById("spanyear").innerHTML = yer;
+                    mnth = 1;
+                    textMnth = "January";
+                           
+            }
+                console.log(textMnth);
+                var twovalues = [textMnth, yer, mnth];
+                return twovalues;
+            }
+  function genDays(curmnth, curyear){
     console.log("genDays start");
   var weekday = new Array(7);
         weekday[0] = "Sunday";
@@ -116,12 +180,21 @@
         weekday[4] = "Thursday";
         weekday[5] = "Friday";
         weekday[6] = "Saturday";
-        for (var j = 0; j < 7; i++) {
-          document.getElementById("day" + j).innerHTML = "";
+
+        //var d8 = new Date();
+        //var curyear = d8.getFullYear();
+        //var curmnth = d8.getMonth() + addon;
+        console.log("Month = month = 1: " + curmnth);
+        var txtMnthArray = getMonthText(curmnth, curyear);
+        var txtMnth = txtMnthArray[0];
+        var curyear = txtMnthArray[1];
+        curmnth = txtMnthArray[2];
+        console.log("Month = month = 1: " + curmnth);
+        if (txtMnth === undefined){
+          txtMnth = getMonthText(curmnth, curyear);
         }
-        var d8 = new Date();
-        var curyear = d8.getFullYear();
-        var curmnth = d8.getMonth() + addon;
+        document.getElementById("monthText").innerHTML = txtMnth;
+        document.getElementById("spanyear").innerHTML = curyear;
         var firstday = new Date(curyear + "-" + curmnth + "-01").getDay();
         var textday;
         switch(firstday){
@@ -149,16 +222,25 @@
         function daysInMonth (month, year) {
           return new Date(year, month, 0).getDate();
         }
-        console.log("First day: " + textday + firstday);
+        console.log("Cur Year: " + curyear);
+        console.log("First day: " + textday + " " + firstday);
         var mnthDays = daysInMonth(curmnth, curyear);
         console.log(mnthDays);
         var totalDay = mnthDays + 1;
         var dayLoop;
+        var linkOne = '<a href="/#day?id=';
+        var linkTwo = "</a>";
+        var fullD8;
+        var d8Link;
         for (var i = 1; i < totalDay; i++) {
+          fullD8 = i + "/" + curmnth + "/" + curyear;
+          d8Link = linkOne + fullD8 + '">' + i + linkTwo;
+          console.log(d8Link);
           dayLoop = firstday + i - 1;
-          document.getElementById("day" + dayLoop).innerHTML = i;
+          document.getElementById("day" + dayLoop).innerHTML = d8Link;
           
         }
+        return curmnth;
   }
 </script>
   </head>
@@ -195,68 +277,52 @@
             </ul>
         </div><!-- end of header -->
          <% include partials/navbar %>
-    </div><!-- end of friends -->
-      <div data-role="page" id="calendar">
+    </div><!-- end of events -->
+    <!-- start of day -->
+    <div data-role="page" id="day">
+      <div data-role="header" data-position="fixed" id="dayHeader">x/x/x
+      </div>
+      <form>
+        <input data-type="search" id="searchForCollapsibleSet">
+    </form>
+        <div data-role="collapsible-set" data-filter="true" data-inset="true" id="collapsiblesetForFilter" data-input="#searchForCollapsibleSet">
+            <div data-role="collapsible" data-filtertext="DayEvent">
+                <h3>Placeholder</h3>
+                <ul data-role="listview" data-inset="false">
+                    <li>Placeholder</li>
+                    <li>Placeholder</li>
+                    <li>Placeholder</li>
+                    <li>Placeholder</li>
+                </ul>
+            </div>
+        </div>
+      <!--
+          <h1><div id="dayTitle"></div></h1>
+          <ul data-role="listview" data-icon="action" data-filter="true">
+          <li><div id="eventInfo">jjnl</div></li>
+          </ul>
+      </div><!-- end of header -->
+    
+       <% include partials/navbar %>
+  </div><!-- end of day -->
+      <div data-role="page" id="calendar2">
         <div data-role="header" data-position="fixed" >
-            <h1>My Calendar <a href="#calendar2">Calendar</a></h1>
+            <h1>My Calendar <a href='#calendar'>Calendar</a></h1>
         </div><!-- end of header -->
           <input type="text" data-role="date" data-inline="true" id="CLNDR">
           
           <% include partials/navbar %>
     
     </div>
-    <div data-role="page" id="calendar2">
+    <div data-role="page" id="calendar">
     <div class="month">      
         <ul>
           <li id="prev">&#10094;</li>
           <li id="next">&#10095;</li>
           <li>
-            <%  function getMonthText(mnth){
-                console.log(mnth);
-                var textMnth;
-            switch(mnth){
-                case 0:
-                    textMnth = "January";
-                    break;
-                case 1:
-                   textMnth = "February";
-                   break; 
-                case 2:
-                    textMnth = "March";
-                    break;
-                case 3:
-                    textMnth = "April";
-                    break;
-                case 4:
-                    textMnth = "May";
-                    break;
-                case 5:
-                   textMnth = "June";
-                   break; 
-                case 6:
-                    textMnth = "July";
-                    break;
-                case 7:
-                    textMnth = "August";
-                    break;
-                case 8:
-                    textMnth = "September";
-                    break;
-                case 9:
-                   textMnth = "October";
-                   break; 
-                case 10:
-                    textMnth = "November";
-                    break;
-                case 11:
-                    textMnth = "December";
-            }
-                console.log(textMnth);
-                return textMnth;
-            } var d = new Date(); var mnth = d.getMonth();  %>
-            <%= getMonthText(mnth); %>
-            <br>
-            <span style="font-size:18px"><%= d.getFullYear(); %></span>
+            <div id="monthText"></div>
+            <br> 
+            <span id="spanyear" style="font-size:18px"></span>
           </li>
         </ul>
       </div>
@@ -342,13 +408,20 @@ $( "#signupBtn" ).click(function() { // when button #signup is clicked
   });
 });
 // End of SignUp
+var currd8 = new Date();
+var month = currd8.getMonth();
+month = month + 1;
+var curyear = currd8.getFullYear();
 // Start of Login
 $( "#loginBtn" ).click(function() { // when button #loginform is clicked
     var username = $("#usernameLog").val();
     var password = $("#passwordLog").val();
     console.log("submit login");
-    var addonday = 1;
-    genDays(addonday);
+    if (month < 12 || month > 0){
+      month = genDays(month, curyear);
+    }else {
+      genDays(month, curyear);
+    }
     $.post( "/login", { username : username, password : password }).done(function( data ) {
         console.log(data);
         //myDate();
@@ -375,15 +448,34 @@ $( "#loginBtn" ).click(function() { // when button #loginform is clicked
 // End of Login  
 // start of prev
 $( "#prev" ).click(function() {
+  resetDays();
   var prevadd = -1;
-  genDays(prevadd);
+  month = month - 1;
+  if (month < 12 || month > 0){
+    month = genDays(month, curyear);
+  }else {
+    genDays(month, curyear);
+  }
 });
 // end of prev
 // start of next
 $( "#next" ).click(function() {
+  resetDays();
   var nextadd = 2;
-  genDays(nextadd);
+  month = month + 1;
+  
+  if (month < 12 || month > 0){
+      month = genDays(month, curyear);
+      console.log("Month: " + month);
+  }else {
+    genDays(month, curyear);
+  }
 });
+/*$( "#day" ).click(function() { // when button #day is clicked
+  $.get( "/dayInfo?id=", { }).done(function( data ) {
+    
+  });
+});*/
 $("#CLNDR").click(function() {
     var calValue = $("#CLNDR").val();
     var cal2 = $("#CLNDR").getDate;
