@@ -98,7 +98,6 @@
   <script src="https://rawgithub.com/jquery/jquery-ui/1-10-stable/ui/jquery.ui.datepicker.js"></script>
   <script src="http://code.jquery.com/mobile/git/jquery.mobile-git.js"></script> 
   <script src="https://rawgithub.com/arschmitz/jquery-mobile-datepicker-wrapper/master/jquery.mobile.datepicker.js"></script>
-  <script src="https://rawgithub.com/arschmitz/jquery-mobile-datepicker-wrapper/master/jquery.mobile.datepicker.js"></script>
 
 <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
@@ -332,8 +331,8 @@ getEvents(page);
         var d8Link;
         for (var i = 1; i < totalDay; i++) {
           fullD8 = i + "/" + curmnth + "/" + curyear;
-          d8Link = linkOne + fullD8 + '">' + i + linkTwo;
-          console.log(d8Link);
+          //d8Link = linkOne + fullD8 + '">' + i + linkTwo;
+          d8Link = "<button id='day" + fullD8 + "'>" + i + "</button>";
           dayLoop = firstday + i - 1;
           document.getElementById("day" + dayLoop).innerHTML = d8Link;
           
@@ -404,18 +403,16 @@ getEvents(page);
           </div><!-- end of header -->
             <div class="panel-body">
               <div id="events" class="list-group">
-                <button class="list-group-item">
+                <button class="list-group-item" id="eventAddBtn">
                   <h4 class="list-group-item-heading">Event title</h4>
                   <p class="list-group-item-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
                   <p class="venue"></p>
                 </button>
-               <!-- <a href="#" class="list-group-item">-->
-                 <button class="list-group-item">
+                 <button class="list-group-item" id="eventAddBtn">
                   <h4 class="list-group-item-heading">Event title</h4>
                   <p class="list-group-item-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
                   <p class="venue"></p>
                </button>
-                <!--</a>-->
                 
               </div>
             </div>
@@ -439,12 +436,264 @@ getEvents(page);
     </form>
         <div data-role="collapsible-set" data-filter="true" data-inset="true" id="collapsiblesetForFilter" data-input="#searchForCollapsibleSet">
             <div data-role="collapsible" data-filtertext="DayEvent">
-                <h3>Placeholder</h3>
+                <h3>00:00 - 01:00</h3>
                 <ul data-role="listview" data-inset="false">
-                    <li>Placeholder</li>
-                    <li>Placeholder</li>
-                    <li>Placeholder</li>
-                    <li>Placeholder</li>
+                    <li id="title1">Free Time</li>
+                    <li id="venue1">Free Time</li>
+                    <li id="city1">Free Time</li>
+                    <li id="duration1">Free Time</li>
+                </ul>
+            </div>
+            <div data-role="collapsible-set" data-filter="true" data-inset="true" id="collapsiblesetForFilter" data-input="#searchForCollapsibleSet">
+              <div data-role="collapsible" data-filtertext="DayEvent">
+                <h3>01:00 - 02:00</h3>
+                <ul data-role="listview" data-inset="false">
+                    <li id="title2">Free Time</li>
+                    <li id="venue2">Free Time</li>
+                    <li id="city2">Free Time</li>
+                    <li id="duration2">Free Time</li>
+                </ul>
+                </div>
+            
+                <div data-role="collapsible-set" data-filter="true" data-inset="true" id="collapsiblesetForFilter" data-input="#searchForCollapsibleSet">
+                  <div data-role="collapsible" data-filtertext="DayEvent">
+                <h3>02:00 - 03:00</h3>
+                <ul data-role="listview" data-inset="false">
+                    <li id="title3">Free Time</li>
+                    <li id="venue3">Free Time</li>
+                    <li id="city3">Free Time</li>
+                    <li id="duration3">Free Time</li>
+                </ul>
+              </div>
+            
+              <div data-role="collapsible-set" data-filter="true" data-inset="true" id="collapsiblesetForFilter" data-input="#searchForCollapsibleSet">
+                <div data-role="collapsible" data-filtertext="DayEvent">
+                <h3>03:00 - 04:00</h3>
+                <ul data-role="listview" data-inset="false">
+                    <li id="title4">Free Time</li>
+                    <li id="venue4">Free Time</li>
+                    <li id="city4">Free Time</li>
+                    <li id="duration4">Free Time</li>
+                </ul>
+              </div>
+            
+              <div data-role="collapsible-set" data-filter="true" data-inset="true" id="collapsiblesetForFilter" data-input="#searchForCollapsibleSet">
+                <div data-role="collapsible" data-filtertext="DayEvent">
+                <h3>04:00 - 05:00</h3>
+                <ul data-role="listview" data-inset="false">
+                    <li id="title5">Free Time</li>
+                    <li id="venue5">Free Time</li>
+                    <li id="city5">Free Time</li>
+                    <li id="duration5">Free Time</li>
+                </ul>
+              </div>
+            
+              <div data-role="collapsible-set" data-filter="true" data-inset="true" id="collapsiblesetForFilter" data-input="#searchForCollapsibleSet">
+                <div data-role="collapsible" data-filtertext="DayEvent">
+                <h3>05:00 - 06:00</h3>
+                <ul data-role="listview" data-inset="false">
+                    <li id="title6">Free Time</li>
+                    <li id="venue6">Free Time</li>
+                    <li id="city6">Free Time</li>
+                    <li id="duration6">Free Time</li>
+                </ul>
+              </div>
+            
+              <div data-role="collapsible-set" data-filter="true" data-inset="true" id="collapsiblesetForFilter" data-input="#searchForCollapsibleSet">
+                <div data-role="collapsible" data-filtertext="DayEvent">
+                <h3>06:00 - 07:00</h3>
+                <ul data-role="listview" data-inset="false">
+                    <li id="title7">Free Time</li>
+                    <li id="venue7">Free Time</li>
+                    <li id="city7">Free Time</li>
+                    <li id="duration7">Free Time</li>
+                </ul>
+              </div>
+            
+              <div data-role="collapsible-set" data-filter="true" data-inset="true" id="collapsiblesetForFilter" data-input="#searchForCollapsibleSet">
+                <div data-role="collapsible" data-filtertext="DayEvent">
+                <h3>07:00 - 08:00</h3>
+                <ul data-role="listview" data-inset="false">
+                    <li id="title8">Free Time</li>
+                    <li id="venue8">Free Time</li>
+                    <li id="city8">Free Time</li>
+                    <li id="duration8">Free Time</li>
+                </ul>
+              </div>
+            
+              <div data-role="collapsible-set" data-filter="true" data-inset="true" id="collapsiblesetForFilter" data-input="#searchForCollapsibleSet">
+                <div data-role="collapsible" data-filtertext="DayEvent">
+                <h3>08:00 - 09:00</h3>
+                <ul data-role="listview" data-inset="false">
+                    <li id="title9">Free Time</li>
+                    <li id="venue9">Free Time</li>
+                    <li id="city9">Free Time</li>
+                    <li id="duration9">Free Time</li>
+                </ul>
+              </div>
+            
+              <div data-role="collapsible-set" data-filter="true" data-inset="true" id="collapsiblesetForFilter" data-input="#searchForCollapsibleSet">
+                <div data-role="collapsible" data-filtertext="DayEvent">
+                <h3>09:00 - 10:00</h3>
+                <ul data-role="listview" data-inset="false">
+                    <li id="title10">Free Time</li>
+                    <li id="venue10">Free Time</li>
+                    <li id="city10">Free Time</li>
+                    <li id="duration10">Free Time</li>
+                </ul>
+              </div>
+            
+              <div data-role="collapsible-set" data-filter="true" data-inset="true" id="collapsiblesetForFilter" data-input="#searchForCollapsibleSet">
+                <div data-role="collapsible" data-filtertext="DayEvent">
+                <h3>10:00 - 11:00</h3>
+                <ul data-role="listview" data-inset="false">
+                    <li id="title11">Free Time</li>
+                    <li id="venue11">Free Time</li>
+                    <li id="city11">Free Time</li>
+                    <li id="duration11">Free Time</li>
+                </ul>
+              </div>
+            
+              <div data-role="collapsible-set" data-filter="true" data-inset="true" id="collapsiblesetForFilter" data-input="#searchForCollapsibleSet">
+                <div data-role="collapsible" data-filtertext="DayEvent">
+                <h3>11:00 - 12:00</h3>
+                <ul data-role="listview" data-inset="false">
+                    <li id="title12">Free Time</li>
+                    <li id="venue12">Free Time</li>
+                    <li id="city12">Free Time</li>
+                    <li id="duration12">Free Time</li>
+                </ul>
+              </div>
+            
+              <div data-role="collapsible-set" data-filter="true" data-inset="true" id="collapsiblesetForFilter" data-input="#searchForCollapsibleSet">
+                <div data-role="collapsible" data-filtertext="DayEvent">
+                <h3>12:00 - 13:00</h3>
+                <ul data-role="listview" data-inset="false">
+                    <li id="title13">Free Time</li>
+                    <li id="venue13">Free Time</li>
+                    <li id="city13">Free Time</li>
+                    <li id="duration13">Free Time</li>
+                </ul>
+              </div>
+            
+              <div data-role="collapsible-set" data-filter="true" data-inset="true" id="collapsiblesetForFilter" data-input="#searchForCollapsibleSet">
+                <div data-role="collapsible" data-filtertext="DayEvent">
+                <h3>13:00 - 14:00</h3>
+                <ul data-role="listview" data-inset="false">
+                    <li id="title14">Free Time</li>
+                    <li id="venue14">Free Time</li>
+                    <li id="city14">Free Time</li>
+                    <li id="duration14">Free Time</li>
+                </ul>
+              </div>
+            
+              <div data-role="collapsible-set" data-filter="true" data-inset="true" id="collapsiblesetForFilter" data-input="#searchForCollapsibleSet">
+                <div data-role="collapsible" data-filtertext="DayEvent">
+                <h3>14:00 - 15:00</h3>
+                <ul data-role="listview" data-inset="false">
+                    <li id="title15">Free Time</li>
+                    <li id="venue15">Free Time</li>
+                    <li id="city15">Free Time</li>
+                    <li id="duration15">Free Time</li>
+                </ul>
+              </div>
+            
+              <div data-role="collapsible-set" data-filter="true" data-inset="true" id="collapsiblesetForFilter" data-input="#searchForCollapsibleSet">
+                <div data-role="collapsible" data-filtertext="DayEvent">
+                <h3>15:00 - 16:00</h3>
+                <ul data-role="listview" data-inset="false">
+                    <li id="title16">Free Time</li>
+                    <li id="venue16">Free Time</li>
+                    <li id="city16">Free Time</li>
+                    <li id="duration16">Free Time</li>
+                </ul>
+              </div>
+            
+              <div data-role="collapsible-set" data-filter="true" data-inset="true" id="collapsiblesetForFilter" data-input="#searchForCollapsibleSet">
+                <div data-role="collapsible" data-filtertext="DayEvent">
+                <h3>16:00 - 17:00</h3>
+                <ul data-role="listview" data-inset="false">
+                    <li id="title17">Free Time</li>
+                    <li id="venue17">Free Time</li>
+                    <li id="city17">Free Time</li>
+                    <li id="duration17">Free Time</li>
+                </ul>
+              </div>
+            
+              <div data-role="collapsible-set" data-filter="true" data-inset="true" id="collapsiblesetForFilter" data-input="#searchForCollapsibleSet">
+                <div data-role="collapsible" data-filtertext="DayEvent">
+                <h3>17:00 - 18:00</h3>
+                <ul data-role="listview" data-inset="false">
+                    <li id="title18">Free Time</li>
+                    <li id="venue18">Free Time</li>
+                    <li id="city18">Free Time</li>
+                    <li id="duration18">Free Time</li>
+                </ul>
+              </div>
+            
+              <div data-role="collapsible-set" data-filter="true" data-inset="true" id="collapsiblesetForFilter" data-input="#searchForCollapsibleSet">
+                <div data-role="collapsible" data-filtertext="DayEvent">
+                <h3>18:00 - 19:00</h3>
+                <ul data-role="listview" data-inset="false">
+                    <li id="title19">Free Time</li>
+                    <li id="venue19">Free Time</li>
+                    <li id="city19">Free Time</li>
+                    <li id="duration19">Free Time</li>
+                </ul>
+              </div>
+            
+              <div data-role="collapsible-set" data-filter="true" data-inset="true" id="collapsiblesetForFilter" data-input="#searchForCollapsibleSet">
+                <div data-role="collapsible" data-filtertext="DayEvent">
+                <h3>19:00 - 20:00</h3>
+                <ul data-role="listview" data-inset="false">
+                    <li id="title20">Free Time</li>
+                    <li id="venue20">Free Time</li>
+                    <li id="city20">Free Time</li>
+                    <li id="duration20">Free Time</li>
+                </ul>
+              </div>
+            
+              <div data-role="collapsible-set" data-filter="true" data-inset="true" id="collapsiblesetForFilter" data-input="#searchForCollapsibleSet">
+                <div data-role="collapsible" data-filtertext="DayEvent">
+                <h3>20:00 - 21:00</h3>
+                <ul data-role="listview" data-inset="false">
+                    <li id="title21">Free Time</li>
+                    <li id="venue21">Free Time</li>
+                    <li id="city21">Free Time</li>
+                    <li id="duration21">Free Time</li>
+                </ul>
+              </div>
+            
+              <div data-role="collapsible-set" data-filter="true" data-inset="true" id="collapsiblesetForFilter" data-input="#searchForCollapsibleSet">
+                <div data-role="collapsible" data-filtertext="DayEvent">
+                <h3>21:00 - 22:00</h3>
+                <ul data-role="listview" data-inset="false">
+                    <li id="title22">Free Time</li>
+                    <li id="venue22">Free Time</li>
+                    <li id="city22">Free Time</li>
+                    <li id="duration22">Free Time</li>
+                </ul>
+              </div>
+            
+              <div data-role="collapsible-set" data-filter="true" data-inset="true" id="collapsiblesetForFilter" data-input="#searchForCollapsibleSet">
+                <div data-role="collapsible" data-filtertext="DayEvent">
+                <h3>22:00 - 23:00</h3>
+                <ul data-role="listview" data-inset="false">
+                    <li id="title23">Free Time</li>
+                    <li id="venue23">Free Time</li>
+                    <li id="city23">Free Time</li>
+                    <li id="duration23">Free Time</li>
+                </ul>
+              </div>
+            
+              <div data-role="collapsible-set" data-filter="true" data-inset="true" id="collapsiblesetForFilter" data-input="#searchForCollapsibleSet">
+                <div data-role="collapsible" data-filtertext="DayEvent">
+                <h3>23:00 - 00:00</h3>
+                <ul data-role="listview" data-inset="false">
+                    <li id="title0">Free Time</li>
+                    <li id="venue0">Free Time</li>
+                    <li id="city0">Free Time</li>
+                    <li id="duration0">Free Time</li>
                 </ul>
             </div>
         </div>
@@ -533,7 +782,6 @@ getEvents(page);
     </div>
     </body>
     <script>
-
 
 // Start of SignUp
 $( "#signupBtn" ).click(function() { // when button #signup is clicked    
@@ -634,11 +882,14 @@ $( "#nextMnth" ).click(function() {
     
   });
 });*/
-$("#CLNDR").click(function() {
-    var calValue = $("#CLNDR").val();
+$("#eventAddBtn").click(function() {
+
+});
+/*
+   var calValue = $("#CLNDR").val();
     var cal2 = $("#CLNDR").getDate;
     console.log(cal2);
-});
+*/
 </script>
 
 </html>
