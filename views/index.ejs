@@ -6,6 +6,7 @@
 
         <title>Rota App</title>
         <style>
+
             * {box-sizing: border-box;}
             ul {list-style-type: none;}
             body {font-family: Verdana, sans-serif;}
@@ -104,7 +105,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>-->
 <script>
-  function genEvents(){
+function genEvents(){
     var page = 0;
 
 function getEvents(page) {
@@ -136,15 +137,18 @@ function getEvents(page) {
   		   }
   });
 }
+// end of getEvents
 
 function showEvents(json) {
   var items = $("#events .list-group-item");
   items.hide();
   var events = json._embedded.events;
   var item = items.first();
+  
   for (var i=0;i<events.length;i++) {
     item.children('.list-group-item-heading').text(events[i].name);
     item.children('.list-group-item-text').text(events[i].dates.start.localDate);
+    console.log("Item: " + events[i].dates.start.localDate);
     try {
       item.children(".venue").text(events[i]._embedded.venues[0].name + " in " + events[i]._embedded.venues[0].city.name);
     } catch (err) {
@@ -163,6 +167,7 @@ function showEvents(json) {
     item=item.next();
   }
 }
+// end of showEvents
 
 $("#prev").click(function() {
   getEvents(--page);
@@ -186,6 +191,7 @@ function getAttraction(id) {
   		   }
   });
 }
+// end of getAttraction
 
 function showAttraction(json) {
   $("#events-panel").hide();
@@ -199,9 +205,12 @@ function showAttraction(json) {
   $("#attraction img").first().attr('src',json.images[0].url);
   $("#classification").text(json.classifications[0].segment.name + " - " + json.classifications[0].genre.name + " - " + json.classifications[0].subGenre.name);
 }
+// end of showAttraction
 
 getEvents(page);
-  }
+}
+// end of genEvents
+
   function resetDays(){
     for (var i = 0; i < 37; i++) {
           
@@ -331,8 +340,8 @@ getEvents(page);
         var d8Link;
         for (var i = 1; i < totalDay; i++) {
           fullD8 = i + "/" + curmnth + "/" + curyear;
-          d8Link = linkOne + fullD8 + '">' + i + linkTwo;
-          //d8Link = "<button id='day" + fullD8 + "'>" + i + "</button>";
+          //d8Link = linkOne + fullD8 + '">' + i + linkTwo;
+          d8Link = "<button id='day" + fullD8 + "'>" + i + "</button>";
           dayLoop = firstday + i - 1;
           document.getElementById("day" + dayLoop).innerHTML = d8Link;
           
@@ -907,6 +916,9 @@ $( "#nextMnth" ).click(function() {
 });*/
 $("#eventAddBtn").click(function() {
 
+  $.post( "/addEvent", { title: title, location : location, country : country, city : city, startTime : startTime, endTime : endTime, eventType : eventType, eventDate : eventDate }).done(function( data ) {
+
+  });
 });
 /*
    var calValue = $("#CLNDR").val();
