@@ -6,7 +6,10 @@
 
         <title>Rota App</title>
         <style>
-
+.col-xs-12 {
+  width: 100%;
+  height: auto;
+}
             * {box-sizing: border-box;}
             ul {list-style-type: none;}
             body {font-family: Verdana, sans-serif;}
@@ -105,249 +108,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>-->
 <script>
-function genEvents(){
-    var page = 0;
 
-function getEvents(page) {
-  $("#events-panel").show();
-  $("#attraction-panel").hide();
-
-  if (page < 0) {
-    page = 0;
-    return;
-  }
-  if (page > 0) {
-    if (page > getEvents.json.page.totalPages-1) {
-      page=0;
-    }
-  }
-  var countrySelect = document.getElementById("countryCode");
-  var countryCode = countrySelect.value;
-  $.ajax({
-    type:"GET",
-    url:"https://app.ticketmaster.com/discovery/v2/events.json?apikey=pLOeuGq2JL05uEGrZG7DuGWu6sh2OnMz&size=2&countryCode="+countryCode+"&page="+page,
-    async:true,
-    dataType: "json",
-    success: function(json) {
-          getEvents.json = json;
-  			  showEvents(json);
-  		   },
-    error: function(xhr, status, err) {
-  			  console.log(err);
-  		   }
-  });
-}
-// end of getEvents
-
-function showEvents(json) {
-  var items = $("#events .list-group-item");
-  items.hide();
-  var events = json._embedded.events;
-  var item = items.first();
-  
-  for (var i=0;i<events.length;i++) {
-    item.children('.list-group-item-heading').text(events[i].name);
-    item.children('.list-group-item-text').text(events[i].dates.start.localDate);
-    console.log("Item: " + events[i].dates.start.localDate);
-    try {
-      item.children(".venue").text(events[i]._embedded.venues[0].name + " in " + events[i]._embedded.venues[0].city.name);
-    } catch (err) {
-      console.log(err);
-    }
-    item.show();
-    item.off("click");
-    item.click(events[i], function(eventObject) {
-      console.log(eventObject.data);
-      try {
-        getAttraction(eventObject.data._embedded.attractions[0].id);
-      } catch (err) {
-      console.log(err);
-      }
-    });
-    item=item.next();
-  }
-}
-// end of showEvents
-
-$("#prev").click(function() {
-  getEvents(--page);
-});
-
-$("#next").click(function() {
-  getEvents(++page);
-});
-
-function getAttraction(id) {
-  $.ajax({
-    type:"GET",
-    url:"https://app.ticketmaster.com/discovery/v2/attractions/"+id+".json?apikey=pLOeuGq2JL05uEGrZG7DuGWu6sh2OnMz",
-    async:true,
-    dataType: "json",
-    success: function(json) {
-          showAttraction(json);
-  		   },
-    error: function(xhr, status, err) {
-  			  console.log(err);
-  		   }
-  });
-}
-// end of getAttraction
-
-function showAttraction(json) {
-  $("#events-panel").hide();
-  $("#attraction-panel").show();
-  
-  $("#attraction-panel").click(function() {
-    getEvents(page);
-  });
-  
-  $("#attraction .list-group-item-heading").first().text(json.name);
-  $("#attraction img").first().attr('src',json.images[0].url);
-  $("#classification").text(json.classifications[0].segment.name + " - " + json.classifications[0].genre.name + " - " + json.classifications[0].subGenre.name);
-}
-// end of showAttraction
-
-getEvents(page);
-}
-// end of genEvents
-
-  function resetDays(){
-    for (var i = 0; i < 37; i++) {
-          
-          document.getElementById("day" + i).innerHTML = "";
-          
-        }
-  }
-  function getMonthText(mnth, yer){
-                console.log(mnth);
-                var textMnth;
-            switch(mnth){
-                case 0:
-                    yer = yer - 1;
-                    console.log(yer);
-                    document.getElementById("spanyear").innerHTML = yer;
-                    mnth = 12;
-                    textMnth = "December";
-                    break;
-                case 1:
-                    textMnth = "January";
-                    break;
-                case 2:
-                   textMnth = "February";
-                   break; 
-                case 3:
-                    textMnth = "March";
-                    break;
-                case 4:
-                    textMnth = "April";
-                    break;
-                case 5:
-                    textMnth = "May";
-                    break;
-                case 6:
-                   textMnth = "June";
-                   break; 
-                case 7:
-                    textMnth = "July";
-                    break;
-                case 8:
-                    textMnth = "August";
-                    break;
-                case 9:
-                    textMnth = "September";
-                    break;
-                case 10:
-                   textMnth = "October";
-                   break; 
-                case 11:
-                    textMnth = "November";
-                    break;
-                case 12:
-                    textMnth = "December";
-                    break;
-                case 13:
-                    yer = yer + 1; 
-                    document.getElementById("spanyear").innerHTML = yer;
-                    mnth = 1;
-                    textMnth = "January";
-                           
-            }
-                console.log(textMnth);
-                var twovalues = [textMnth, yer, mnth];
-                return twovalues;
-            }
-  function genDays(curmnth, curyear){
-    console.log("genDays start");
-  var weekday = new Array(7);
-        weekday[0] = "Sunday";
-        weekday[1] = "Monday";
-        weekday[2] = "Tuesday";
-        weekday[3] = "Wednesday";
-        weekday[4] = "Thursday";
-        weekday[5] = "Friday";
-        weekday[6] = "Saturday";
-
-        //var d8 = new Date();
-        //var curyear = d8.getFullYear();
-        //var curmnth = d8.getMonth() + addon;
-        console.log("Month = month = 1: " + curmnth);
-        var txtMnthArray = getMonthText(curmnth, curyear);
-        var txtMnth = txtMnthArray[0];
-        var curyear = txtMnthArray[1];
-        curmnth = txtMnthArray[2];
-        console.log("Month = month = 1: " + curmnth);
-        if (txtMnth === undefined){
-          txtMnth = getMonthText(curmnth, curyear);
-        }
-        document.getElementById("monthText").innerHTML = txtMnth;
-        document.getElementById("spanyear").innerHTML = curyear;
-        var firstday = new Date(curyear + "-" + curmnth + "-01").getDay();
-        var textday;
-        switch(firstday){
-          case 0:
-            textday = weekday[0];
-            break;
-          case 1:
-            textday = weekday[1];
-            break;
-          case 2:
-            textday = weekday[2];
-            break;
-          case 3:
-            textday = weekday[3];
-            break;
-          case 4:
-            textday = weekday[4];
-            break;
-          case 5:
-            textday = weekday[5];
-            break;
-          case 6:
-            textday = weekday[6];
-        }
-        function daysInMonth (month, year) {
-          return new Date(year, month, 0).getDate();
-        }
-        console.log("Cur Year: " + curyear);
-        console.log("First day: " + textday + " " + firstday);
-        var mnthDays = daysInMonth(curmnth, curyear);
-        console.log(mnthDays);
-        var totalDay = mnthDays + 1;
-        var dayLoop;
-        var linkOne = '<a href="/#day?id=';
-        var linkTwo = "</a>";
-        var fullD8;
-        var d8Link;
-        for (var i = 1; i < totalDay; i++) {
-          fullD8 = i + "/" + curmnth + "/" + curyear;
-          //d8Link = linkOne + fullD8 + '">' + i + linkTwo;
-          d8Link = "<button id='day" + fullD8 + "'>" + i + "</button>";
-          dayLoop = firstday + i - 1;
-          document.getElementById("day" + dayLoop).innerHTML = d8Link;
-          
-        }
-        return curmnth;
-  }
 </script>
   </head>
   <body>
@@ -377,6 +138,7 @@ getEvents(page);
          <% include partials/navbar %>
     </div><!-- end of friends -->
           <div data-role="page" id="events">
+            <div id='events-panel' class="panel panel-primary">
         <div data-role="header" data-position="fixed">
             <h1>Events</h1>
             <select id="countryCode" name="countryCode">
@@ -432,6 +194,17 @@ getEvents(page);
                   <li id="next" class="next"><a href="#"><span aria-hidden="true">&rarr;</span></a></li>
                 </ul>
               </nav>
+            </div>
+          </div>
+            <div id='attraction-panel' class="panel panel-primary">
+              <div class="panel-heading">
+                <h3 class="panel-title">Attraction</h3>
+              </div>
+              <div id="attraction" class="panel-body">
+                <h4 class="list-group-item-heading">Attraction title</h4>
+                <img class="col-xs-12"  src="">
+                <p id="classification"></p>
+              </div>
             </div>
         
          <% include partials/navbar %>
@@ -814,7 +587,257 @@ getEvents(page);
     </div>
     </body>
     <script>
+// Javascript
+function genEvents(){
+    var page = 0;
 
+function getEvents(page) {
+  $("#events-panel").show();
+  $("#attraction-panel").hide();
+
+  if (page < 0) {
+    page = 0;
+    return;
+  }
+  if (page > 0) {
+    if (page > getEvents.json.page.totalPages-1) {
+      page=0;
+    }
+  }
+  var countrySelect = document.getElementById("countryCode");
+  var countryCode = countrySelect.value;
+  $.ajax({
+    type:"GET",
+    url:"https://app.ticketmaster.com/discovery/v2/events.json?apikey=pLOeuGq2JL05uEGrZG7DuGWu6sh2OnMz&size=2&countryCode="+countryCode+"&page="+page,
+    async:true,
+    dataType: "json",
+    success: function(json) {
+          getEvents.json = json;
+  			  showEvents(json);
+  		   },
+    error: function(xhr, status, err) {
+  			  console.log(err);
+  		   }
+  });
+}
+// end of getEvents
+
+function showEvents(json) {
+  var items = $("#events .list-group-item");
+  items.hide();
+  var events = json._embedded.events;
+  var item = items.first();
+  
+  for (var i=0;i<events.length;i++) {
+    item.children('.list-group-item-heading').text(events[i].name);
+    item.children('.list-group-item-text').text(events[i].dates.start.localDate);
+    console.log("Item: " + events[i].dates.start.localDate);
+    try {
+      item.children(".venue").text(events[i]._embedded.venues[0].name + " in " + events[i]._embedded.venues[0].city.name);
+    } catch (err) {
+      console.log(err);
+    }
+    item.show();
+    item.off("click");
+    item.click(events[i], function(eventObject) {
+      console.log(eventObject.data);
+      try {
+        getAttraction(eventObject.data._embedded.attractions[0].id);
+      } catch (err) {
+      console.log(err);
+      }
+    });
+    item=item.next();
+  }
+}
+// end of showEvents
+
+$("#prev").click(function() {
+  getEvents(--page);
+});
+
+$("#next").click(function() {
+  getEvents(++page);
+});
+
+function getAttraction(id) {
+  $.ajax({
+    type:"GET",
+    url:"https://app.ticketmaster.com/discovery/v2/attractions/"+id+".json?apikey=pLOeuGq2JL05uEGrZG7DuGWu6sh2OnMz",
+    async:true,
+    dataType: "json",
+    success: function(json) {
+          showAttraction(json);
+  		   },
+    error: function(xhr, status, err) {
+  			  console.log(err);
+  		   }
+  });
+}
+// end of getAttraction
+
+function showAttraction(json) {
+  $("#events-panel").hide();
+  $("#attraction-panel").show();
+  
+  $("#attraction-panel").click(function() {
+    getEvents(page);
+  });
+  
+  $("#attraction .list-group-item-heading").first().text(json.name);
+  console.log("json: " + json.name);
+  $("#attraction img").first().attr('src',json.images[0].url);
+  $("#classification").text(json.classifications[0].segment.name + " - " + json.classifications[0].genre.name + " - " + json.classifications[0].subGenre.name);
+}
+// end of showAttraction
+
+getEvents(page);
+}
+// end of genEvents
+
+  function resetDays(){
+    for (var i = 0; i < 37; i++) {
+          
+          document.getElementById("day" + i).innerHTML = "";
+          
+        }
+  }
+  function getMonthText(mnth, yer){
+                console.log(mnth);
+                var textMnth;
+            switch(mnth){
+                case 0:
+                    yer = yer - 1;
+                    console.log(yer);
+                    document.getElementById("spanyear").innerHTML = yer;
+                    mnth = 12;
+                    textMnth = "December";
+                    break;
+                case 1:
+                    textMnth = "January";
+                    break;
+                case 2:
+                   textMnth = "February";
+                   break; 
+                case 3:
+                    textMnth = "March";
+                    break;
+                case 4:
+                    textMnth = "April";
+                    break;
+                case 5:
+                    textMnth = "May";
+                    break;
+                case 6:
+                   textMnth = "June";
+                   break; 
+                case 7:
+                    textMnth = "July";
+                    break;
+                case 8:
+                    textMnth = "August";
+                    break;
+                case 9:
+                    textMnth = "September";
+                    break;
+                case 10:
+                   textMnth = "October";
+                   break; 
+                case 11:
+                    textMnth = "November";
+                    break;
+                case 12:
+                    textMnth = "December";
+                    break;
+                case 13:
+                    yer = yer + 1; 
+                    document.getElementById("spanyear").innerHTML = yer;
+                    mnth = 1;
+                    textMnth = "January";
+                           
+            }
+                console.log(textMnth);
+                var twovalues = [textMnth, yer, mnth];
+                return twovalues;
+            }
+  function genDays(curmnth, curyear){
+    console.log("genDays start");
+  var weekday = new Array(7);
+        weekday[0] = "Sunday";
+        weekday[1] = "Monday";
+        weekday[2] = "Tuesday";
+        weekday[3] = "Wednesday";
+        weekday[4] = "Thursday";
+        weekday[5] = "Friday";
+        weekday[6] = "Saturday";
+
+        //var d8 = new Date();
+        //var curyear = d8.getFullYear();
+        //var curmnth = d8.getMonth() + addon;
+        console.log("Month = month = 1: " + curmnth);
+        var txtMnthArray = getMonthText(curmnth, curyear);
+        var txtMnth = txtMnthArray[0];
+        var curyear = txtMnthArray[1];
+        curmnth = txtMnthArray[2];
+        console.log("Month = month = 1: " + curmnth);
+        if (txtMnth === undefined){
+          txtMnth = getMonthText(curmnth, curyear);
+        }
+        document.getElementById("monthText").innerHTML = txtMnth;
+        document.getElementById("spanyear").innerHTML = curyear;
+        var firstday = new Date(curyear + "-" + curmnth + "-01").getDay();
+        var textday;
+        switch(firstday){
+          case 0:
+            textday = weekday[0];
+            break;
+          case 1:
+            textday = weekday[1];
+            break;
+          case 2:
+            textday = weekday[2];
+            break;
+          case 3:
+            textday = weekday[3];
+            break;
+          case 4:
+            textday = weekday[4];
+            break;
+          case 5:
+            textday = weekday[5];
+            break;
+          case 6:
+            textday = weekday[6];
+        }
+        function daysInMonth (month, year) {
+          return new Date(year, month, 0).getDate();
+        }
+        console.log("Cur Year: " + curyear);
+        console.log("First day: " + textday + " " + firstday);
+        var mnthDays = daysInMonth(curmnth, curyear);
+        console.log(mnthDays);
+        var totalDay = mnthDays + 1;
+        var dayLoop;
+        var linkOne = '<a href="/#day?id=';
+        var linkTwo = "</a>";
+        var fullD8;
+        var d8Link;
+        for (var i = 1; i < totalDay; i++) {
+          fullD8 = i + "/" + curmnth + "/" + curyear;
+          //d8Link = linkOne + fullD8 + '">' + i + linkTwo;
+          d8Link = "<button type='submit' onclick='dayBtnFunc(name)' name='" + fullD8 + "'>" + i + "</button>";
+          dayLoop = firstday + i - 1;
+          document.getElementById("day" + dayLoop).innerHTML = d8Link;
+          
+        }
+        return curmnth;
+  }
+function dayBtnFunc(name){
+    console.log("Btn" + name);
+    document.location.href = "/#day";
+    document.getElementById("dayHeader").innerHTML = name;
+  }
+// JQuery Mobile
 // Start of SignUp
 $( "#signupBtn" ).click(function() { // when button #signup is clicked    
         var user = $("#usernameSign").val();
@@ -866,8 +889,6 @@ $( "#loginBtn" ).click(function() { // when button #loginform is clicked
         if (data == username){
             console.log("WIN!!");
 
-
-    
             window.location = "/#calendar";
             
             
@@ -909,11 +930,13 @@ $( "#nextMnth" ).click(function() {
     genDays(month, curyear);
   }
 });
-/*$( "#day" ).click(function() { // when button #day is clicked
-  $.get( "/dayInfo?id=", { }).done(function( data ) {
+$( "#dayBtn" ).click(function() { // when button #day is clicked
+  window.location = "/#day";
+  console.log("Guess the btn works?");
+  /*$.get( "/dayInfo?id=", { }).done(function( data ) {
     
-  });
-});*/
+  });*/
+});
 $("#eventAddBtn").click(function() {
 
   $.post( "/addEvent", { title: title, location : location, country : country, city : city, startTime : startTime, endTime : endTime, eventType : eventType, eventDate : eventDate }).done(function( data ) {
