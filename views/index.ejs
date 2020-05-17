@@ -131,7 +131,7 @@
     </div><!-- end of signup -->
     <div data-role="page" id="friends">
         <div data-role="header" data-position="fixed">
-            <h1>Friends</h1>
+            <h1 id="friend">Friends</h1>
             <ul data-role="listview" data-icon="action" data-filter="true">
             </ul>
         </div><!-- end of header -->
@@ -174,12 +174,12 @@
           </div><!-- end of header -->
             <div class="panel-body">
               <div id="events" class="list-group">
-                <button class="list-group-item" id="eventAddBtn">
+                <button class="list-group-item">
                   <h4 class="list-group-item-heading">Event title</h4>
                   <p class="list-group-item-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
                   <p class="venue"></p>
                 </button>
-                 <button class="list-group-item" id="eventAddBtn">
+                 <button class="list-group-item">
                   <h4 class="list-group-item-heading">Event title</h4>
                   <p class="list-group-item-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
                   <p class="venue"></p>
@@ -198,12 +198,22 @@
           </div>
             <div id='attraction-panel' class="panel panel-primary">
               <div class="panel-heading">
-                <h3 class="panel-title">Attraction</h3>
+                <h3 class="panel-title">Attraction</h3> <button id="eventAddBtn">Add</button> 
+                <button id="backBtn">Back</button>
               </div>
               <div id="attraction" class="panel-body">
                 <h4 class="list-group-item-heading">Attraction title</h4>
                 <img class="col-xs-12"  src="">
                 <p id="classification"></p>
+                <h4 id="eventTitle"></h4>
+                <h4 id="eventLocation"></h4>
+                <h4 id="eventCity"></h4>
+                <h4 id="eventCountry"></h4>
+                <h4>Event Type</h4>
+                <p id="eventType"></p>
+                <h4>Start Time</h4>
+                <p id="eventTime"></p>
+                <p id="eventDate"></p>
               </div>
             </div>
         
@@ -631,7 +641,7 @@ function showEvents(json) {
   for (var i=0;i<events.length;i++) {
     item.children('.list-group-item-heading').text(events[i].name);
     item.children('.list-group-item-text').text(events[i].dates.start.localDate);
-    console.log("Item: " + events[i].dates.start.localDate);
+    console.log("Item: " + events[0].dates.start.localDate);
     try {
       item.children(".venue").text(events[i]._embedded.venues[0].name + " in " + events[i]._embedded.venues[0].city.name);
     } catch (err) {
@@ -641,8 +651,17 @@ function showEvents(json) {
     item.off("click");
     item.click(events[i], function(eventObject) {
       console.log(eventObject.data);
+      console.log(eventObject.data.dates.start.localDate);
+      $("#eventTime").text(eventObject.data.dates.start.localTime);
+      $("#eventDate").text(eventObject.data.dates.start.localDate);
+      $("#eventLocation").text(eventObject.data._embedded.venues[0].name);
+      $("#eventCity").text(eventObject.data._embedded.venues[0].city.name);
+      $("#eventCountry").text(eventObject.data._embedded.venues[0].country.name);
+      $("#eventTitle").text(eventObject.data.name);
+      var eventd8 = eventObject.data.dates.start.localDate;
       try {
         getAttraction(eventObject.data._embedded.attractions[0].id);
+        
       } catch (err) {
       console.log(err);
       }
@@ -661,6 +680,7 @@ $("#next").click(function() {
 });
 
 function getAttraction(id) {
+  
   $.ajax({
     type:"GET",
     url:"https://app.ticketmaster.com/discovery/v2/attractions/"+id+".json?apikey=pLOeuGq2JL05uEGrZG7DuGWu6sh2OnMz",
@@ -680,7 +700,7 @@ function showAttraction(json) {
   $("#events-panel").hide();
   $("#attraction-panel").show();
   
-  $("#attraction-panel").click(function() {
+  $("#backBtn").click(function() {
     getEvents(page);
   });
   
@@ -688,6 +708,8 @@ function showAttraction(json) {
   console.log("json: " + json.name);
   $("#attraction img").first().attr('src',json.images[0].url);
   $("#classification").text(json.classifications[0].segment.name + " - " + json.classifications[0].genre.name + " - " + json.classifications[0].subGenre.name);
+  $("#eventType").text(json.classifications[0].segment.name);
+
 }
 // end of showAttraction
 
@@ -876,7 +898,7 @@ $( "#eventSearch" ).click(function() { // when button #eventSearch is clicked
 $( "#loginBtn" ).click(function() { // when button #loginform is clicked
     var username = $("#usernameLog").val();
     var password = $("#passwordLog").val();
-    console.log("submit login");
+    console.log("submit login" + username);
     if (month < 12 || month > 0){
       month = genDays(month, curyear);
     }else {
@@ -888,21 +910,15 @@ $( "#loginBtn" ).click(function() { // when button #loginform is clicked
         //myDate();
         if (data == username){
             console.log("WIN!!");
-
             window.location = "/#calendar";
-            
-            
-            /*$.get("/login", { }).done(function( data ) {
+            $.get("/login", { }).done(function( data ) {
                         
-            });*/
+            });
         }else{
             console.log("ERROR");
-            window.location = "/#err";
-                    
-        }
-             
-    });
-         
+            window.location = "/#err";      
+        }  
+    });    
 });
 // End of Login  
 // start of prev
@@ -938,9 +954,25 @@ $( "#dayBtn" ).click(function() { // when button #day is clicked
   });*/
 });
 $("#eventAddBtn").click(function() {
-
-  $.post( "/addEvent", { title: title, location : location, country : country, city : city, startTime : startTime, endTime : endTime, eventType : eventType, eventDate : eventDate }).done(function( data ) {
-
+  var dateofEv =   document.getElementById("eventDate").textContent;
+  var eventType =   document.getElementById("eventType").textContent;
+  var eventLocation =   document.getElementById("eventLocation").textContent;
+  var eventCity =   document.getElementById("eventCity").textContent;
+  var eventCountry =   document.getElementById("eventCountry").textContent;
+  var eventTime =   document.getElementById("eventTime").textContent;
+  var eventTitle =   document.getElementById("eventTitle").textContent;
+  var splitTime = eventTime.split(":");
+  eventTime = splitTime[0] +":"+ splitTime[1];
+  console.log(eventTime);
+  var splitDate = dateofEv.split("-");
+  var eventYear = splitDate[0];
+  var eventDay = splitDate[1];
+  var eventMonth = splitDate[2];
+  eventDay = (eventDay * 1).toString();
+  eventMonth = (eventMonth * 1).toString();
+  console.log(eventYear +"/"+ eventDay +"/"+ eventMonth);
+  $.post( "/addEvent", { eventTitle: eventTitle, eventLocation : eventLocation, eventCountry : eventCountry, eventCity : eventCity, eventTime : eventTime,  eventType : eventType, eventYear : eventYear, eventMonth : eventMonth, eventDay : eventDay }).done(function( data ) {
+    console.log(data);
   });
 });
 /*

@@ -1,8 +1,12 @@
+var http = require('http');
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var expressSession = require('express-session'); // session 
+var bodyParser = require('body-parser'); //bodyParser
+var expressValidator = require('express-validator'); // validator
+
 var bcrypt = require('bcryptjs');
 var morgan = require('morgan');
 
@@ -16,13 +20,14 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 app.use(morgan('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(expressValidator());
 app.use(cookieParser());
 // Use the session middleware
-app.use(expressSession({ secret: 'max', saveUninitialized: false, resave:false}));
-app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(expressSession({ secret: 'max', saveUninitialized: false, resave:false}));
 app.post('/signup',function(req,res){
     console.log('/signup');
     // requesting the details from the signup form
@@ -35,6 +40,7 @@ app.post('/signup',function(req,res){
     bcrypt.hash(pass, 8, function(err, hash) {
     pass = hash;
     // end of request
+    
     var data = "";
     // testing the details
     console.log("User name = "+user);
@@ -83,7 +89,7 @@ app.post('/login',function(req,res){
   var username = req.body.username;
   var pass = req.body.password;
   console.log("User name = "+username);
-  
+
         var mysql = require('mysql')
         var connection = mysql.createConnection({
           host     : 'localhost',
@@ -107,9 +113,13 @@ app.post('/login',function(req,res){
         console.log(pass);
         
         bcrypt.compare(pass, passHash, function(err, res) {
-    
+            if (err){
+                //handle error
+                console.log("Err" + res);
+                connection.end();
+            }
             if (res){ // if the hash of pass = passHash is true
-                console.log("Pass equal");
+                console.log("Pass equal" + res);
 
             //put into the session
                 req.session.username = rows[0].username;
@@ -118,16 +128,23 @@ app.post('/login',function(req,res){
                 req.session.email = rows[0].email;
                 req.session.lname = rows[0].lname;
         
+               // if (err) throw err;
+                //if (rows.length != 1){
+                    //console.log("Error; Username & Password did not match");
+                    //connection.end();
+                //}else{ // end of rows.length
                 if (err) throw err;
                 if (rows.length != 1){
                     console.log("Error; Username & Password did not match");
                     connection.end();
-                }else{ // end of rows.length
+                }else{
+              
                     connection.end();
-                } // end of else
+                }
+                //} // end of else
             } // end if (res)
             else{
-                console.log("Error hashes don't match");
+                console.log("Error hashes don't match"  + res);
                 connection.end();
             } // end of else
         }); // end of bcrypt
@@ -136,8 +153,58 @@ app.post('/login',function(req,res){
               
     }); // end of query
     res.send(username);
-
 }); // end of /login
+app.get('/login', function (req, res) {
+
+    console.log('/login');
+    var username = req.session.username;
+    res.send('The value is ' + username);
+});
+// start of /addEvent
+app.post('/addEvent',function(req, res){
+    var username = req.session.username; // gets the user's username from the session
+    console.log('/addEvent');
+    // requesting the details from the addEvent form
+    var eventTitle = req.body.eventTitle;
+    var eventDay = req.body.eventDay;
+    var eventYear = req.body.eventYear;
+    var eventMonth = req.body.eventMonth;
+    var eventLocation = req.body.eventLocation;
+    var eventCity = req.body.eventCity;
+    var eventCountry = req.body.eventCountry;
+    var eventTime = req.body.eventTime;
+    var eventType = req.body.eventType;
+    
+    var data;
+
+    // end of request
+    var data = "";
+    // testing the details
+    console.log("User name = "+username);
+    console.log("Event  Title = "+ eventTitle);
+    console.log("Event  City= "+ eventCity);
+    console.log("Event  Time= "+ eventTime);
+    console.log("Event  Type= "+ eventType);
+    console.log("Event  Country= "+ eventCountry);
+    console.log("Event  Location= "+ eventLocation);
+    console.log("Event  Date= "+ eventYear + "/" + eventDay + "/" + eventMonth);
+    // end of test
+    var mysql = require('mysql')
+    var connection = mysql.createConnection({
+          host     : 'localhost',
+          user     : 'root',
+          password : 'root',
+          database : 'rota'
+    });
+    eventTime = eventTime + ":00";
+    connection.connect();
+    console.log("Connect to database");
+    connection.query("INSERT INTO rota.events (username, eventTitle, eventMonth, eventYear, eventDay, startTime, eventLocation, eventCity, eventCountry, eventType) values ('"+username+"', '"+eventTitle+"', '"+eventMonth+"', '"+eventYear+"', '"+eventDay+"', '"+eventTime+"', '"+eventLocation+"', '"+eventCity+"','"+eventCountry+"', '"+eventType+"')");
+    connection.end();
+    data="pass";
+    res.send(data);
+});
+// end of /addEvent
 
 /*
 // start of /getDateData
