@@ -4,7 +4,7 @@
 <meta charset="utf-8">
         <meta name="viewport" content="initial-scale=1, maximum-scale=1, width=device-width">
 
-        <title>Rota App</title>
+        <title>{{ title }}</title>
         <style>
 .col-xs-12 {
   width: 100%;
@@ -908,12 +908,13 @@ $( "#loginBtn" ).click(function() { // when button #loginform is clicked
         console.log(data);
         genEvents();
         //myDate();
+        $.get("/login", { }).done(function( data ) {
+                        
+        });
         if (data == username){
             console.log("WIN!!");
             window.location = "/#calendar";
-            $.get("/login", { }).done(function( data ) {
-                        
-            });
+            
         }else{
             console.log("ERROR");
             window.location = "/#err";      
@@ -973,6 +974,9 @@ $("#eventAddBtn").click(function() {
   console.log(eventYear +"/"+ eventDay +"/"+ eventMonth);
   $.post( "/addEvent", { eventTitle: eventTitle, eventLocation : eventLocation, eventCountry : eventCountry, eventCity : eventCity, eventTime : eventTime,  eventType : eventType, eventYear : eventYear, eventMonth : eventMonth, eventDay : eventDay }).done(function( data ) {
     console.log(data);
+    $.get("/login", { }).done(function( data ) {
+                        
+    });
   });
 });
 /*
