@@ -133,10 +133,33 @@
         <div data-role="header" data-position="fixed">
             <h1 id="friend">Friends</h1>
             <ul data-role="listview" data-icon="action" data-filter="true">
+              <li><a href="/#profile">Profile</a></li>
             </ul>
         </div><!-- end of header -->
          <% include partials/navbar %>
     </div><!-- end of friends -->
+    <div data-role="page" id="profile">
+      <div data-role="header" data-position="fixed">
+          <h1 id="usernameProf"></h1>
+          <ul data-role="listview" data-icon="action" data-filter="true">
+          </ul>
+      </div><!-- end of header -->
+       <% include partials/navbar %>
+  </div><!-- end of profile -->
+    <div data-role="page" id="insertEv">
+      <div data-role="header" data-position="fixed">
+          <h1 id="insertEv">Add Event</h1>
+      </div><!-- end of header -->
+      Event Title: <input type="text" id="userEvTitle" name="evTitle" placeholder="Birthday Party">
+      Date: <input type="date" id="userEvDate" name="evDate">
+      Time: <input type="time" id="userEvTime" name="evTime">
+      Location: <input type="text" id="userEvLocation" name="evLocation" placeholder="My House">
+      City: <input type="text" id="userEvCity" name="evCity" placeholder="Dublin">
+      Country: <input type="text" id="userEvCountry" name="evCountry" placeholder="Ireland">
+      Type: <input type="text" id="userEvType" name="evType" placeholder="Party">
+  <button type="submit" id="addEvBtn" value="Submit">Submit</button>
+       <% include partials/navbar %>
+  </div><!-- end of friends -->
           <div data-role="page" id="events">
             <div id='events-panel' class="panel panel-primary">
         <div data-role="header" data-position="fixed">
@@ -230,10 +253,10 @@
             <div data-role="collapsible" data-filtertext="DayEvent">
                 <h3>00:00 - 01:00</h3>
                 <ul data-role="listview" data-inset="false">
-                    <li id="title1">Free Time</li>
-                    <li id="venue1">Free Time</li>
-                    <li id="city1">Free Time</li>
-                    <li id="duration1">Free Time</li>
+                    <li id="title0">Free Time</li>
+                    <li id="venue0">Free Time</li>
+                    <li id="city0">Free Time</li>
+                    <li id="genre0">Free Time</li>
                 </ul>
             </div>
           </div>
@@ -242,10 +265,10 @@
               <div data-role="collapsible" data-filtertext="DayEvent">
                 <h3>01:00 - 02:00</h3>
                 <ul data-role="listview" data-inset="false">
-                    <li id="title2">Free Time</li>
-                    <li id="venue2">Free Time</li>
-                    <li id="city2">Free Time</li>
-                    <li id="duration2">Free Time</li>
+                    <li id="title1">Free Time</li>
+                    <li id="venue1">Free Time</li>
+                    <li id="city1">Free Time</li>
+                    <li id="genre1">Free Time</li>
                 </ul>
                 </div>
             </div>
@@ -254,10 +277,10 @@
                   <div data-role="collapsible" data-filtertext="DayEvent">
                 <h3>02:00 - 03:00</h3>
                 <ul data-role="listview" data-inset="false">
-                    <li id="title3">Free Time</li>
-                    <li id="venue3">Free Time</li>
-                    <li id="city3">Free Time</li>
-                    <li id="duration3">Free Time</li>
+                    <li id="title2">Free Time</li>
+                    <li id="venue2">Free Time</li>
+                    <li id="city2">Free Time</li>
+                    <li id="genre2">Free Time</li>
                 </ul>
               </div>
             </div>
@@ -266,10 +289,10 @@
                 <div data-role="collapsible" data-filtertext="DayEvent">
                 <h3>03:00 - 04:00</h3>
                 <ul data-role="listview" data-inset="false">
-                    <li id="title4">Free Time</li>
-                    <li id="venue4">Free Time</li>
-                    <li id="city4">Free Time</li>
-                    <li id="duration4">Free Time</li>
+                    <li id="title3">Free Time</li>
+                    <li id="venue3">Free Time</li>
+                    <li id="city3">Free Time</li>
+                    <li id="genre3">Free Time</li>
                 </ul>
               </div>
             </div>
@@ -278,10 +301,10 @@
                 <div data-role="collapsible" data-filtertext="DayEvent">
                 <h3>04:00 - 05:00</h3>
                 <ul data-role="listview" data-inset="false">
-                    <li id="title5">Free Time</li>
-                    <li id="venue5">Free Time</li>
-                    <li id="city5">Free Time</li>
-                    <li id="duration5">Free Time</li>
+                    <li id="title4">Free Time</li>
+                    <li id="venue4">Free Time</li>
+                    <li id="city4">Free Time</li>
+                    <li id="genre4">Free Time</li>
                 </ul>
               </div>
             </div>
@@ -290,10 +313,10 @@
                 <div data-role="collapsible" data-filtertext="DayEvent">
                 <h3>05:00 - 06:00</h3>
                 <ul data-role="listview" data-inset="false">
-                    <li id="title6">Free Time</li>
-                    <li id="venue6">Free Time</li>
-                    <li id="city6">Free Time</li>
-                    <li id="duration6">Free Time</li>
+                    <li id="title5">Free Time</li>
+                    <li id="venue5">Free Time</li>
+                    <li id="city5">Free Time</li>
+                    <li id="genre5">Free Time</li>
                 </ul>
               </div>
             </div>
@@ -302,10 +325,10 @@
                 <div data-role="collapsible" data-filtertext="DayEvent">
                 <h3>06:00 - 07:00</h3>
                 <ul data-role="listview" data-inset="false">
-                    <li id="title7">Free Time</li>
-                    <li id="venue7">Free Time</li>
-                    <li id="city7">Free Time</li>
-                    <li id="duration7">Free Time</li>
+                    <li id="title6">Free Time</li>
+                    <li id="venue6">Free Time</li>
+                    <li id="city6">Free Time</li>
+                    <li id="genre6">Free Time</li>
                 </ul>
               </div>
             </div>
@@ -314,10 +337,10 @@
                 <div data-role="collapsible" data-filtertext="DayEvent">
                 <h3>07:00 - 08:00</h3>
                 <ul data-role="listview" data-inset="false">
-                    <li id="title8">Free Time</li>
-                    <li id="venue8">Free Time</li>
-                    <li id="city8">Free Time</li>
-                    <li id="duration8">Free Time</li>
+                    <li id="title7">Free Time</li>
+                    <li id="venue7">Free Time</li>
+                    <li id="city7">Free Time</li>
+                    <li id="genre7">Free Time</li>
                 </ul>
               </div>
             </div>
@@ -326,10 +349,10 @@
                 <div data-role="collapsible" data-filtertext="DayEvent">
                 <h3>08:00 - 09:00</h3>
                 <ul data-role="listview" data-inset="false">
-                    <li id="title9">Free Time</li>
-                    <li id="venue9">Free Time</li>
-                    <li id="city9">Free Time</li>
-                    <li id="duration9">Free Time</li>
+                    <li id="title8">Free Time</li>
+                    <li id="venue8">Free Time</li>
+                    <li id="city8">Free Time</li>
+                    <li id="genre8">Free Time</li>
                 </ul>
               </div>
             </div>
@@ -338,10 +361,10 @@
                 <div data-role="collapsible" data-filtertext="DayEvent">
                 <h3>09:00 - 10:00</h3>
                 <ul data-role="listview" data-inset="false">
-                    <li id="title10">Free Time</li>
-                    <li id="venue10">Free Time</li>
-                    <li id="city10">Free Time</li>
-                    <li id="duration10">Free Time</li>
+                    <li id="title9">Free Time</li>
+                    <li id="venue9">Free Time</li>
+                    <li id="city9">Free Time</li>
+                    <li id="genre9">Free Time</li>
                 </ul>
               </div>
             </div>
@@ -350,10 +373,10 @@
                 <div data-role="collapsible" data-filtertext="DayEvent">
                 <h3>10:00 - 11:00</h3>
                 <ul data-role="listview" data-inset="false">
-                    <li id="title11">Free Time</li>
-                    <li id="venue11">Free Time</li>
-                    <li id="city11">Free Time</li>
-                    <li id="duration11">Free Time</li>
+                    <li id="title10">Free Time</li>
+                    <li id="venue10">Free Time</li>
+                    <li id="city10">Free Time</li>
+                    <li id="genre10">Free Time</li>
                 </ul>
               </div>
             </div>
@@ -362,10 +385,10 @@
                 <div data-role="collapsible" data-filtertext="DayEvent">
                 <h3>11:00 - 12:00</h3>
                 <ul data-role="listview" data-inset="false">
-                    <li id="title12">Free Time</li>
-                    <li id="venue12">Free Time</li>
-                    <li id="city12">Free Time</li>
-                    <li id="duration12">Free Time</li>
+                    <li id="title11">Free Time</li>
+                    <li id="venue11">Free Time</li>
+                    <li id="city11">Free Time</li>
+                    <li id="genre11">Free Time</li>
                 </ul>
               </div>
             </div>
@@ -374,10 +397,10 @@
                 <div data-role="collapsible" data-filtertext="DayEvent">
                 <h3>12:00 - 13:00</h3>
                 <ul data-role="listview" data-inset="false">
-                    <li id="title13">Free Time</li>
-                    <li id="venue13">Free Time</li>
-                    <li id="city13">Free Time</li>
-                    <li id="duration13">Free Time</li>
+                    <li id="title12">Free Time</li>
+                    <li id="venue12">Free Time</li>
+                    <li id="city12">Free Time</li>
+                    <li id="genre12">Free Time</li>
                 </ul>
               </div>
             </div>
@@ -386,10 +409,10 @@
                 <div data-role="collapsible" data-filtertext="DayEvent">
                 <h3>13:00 - 14:00</h3>
                 <ul data-role="listview" data-inset="false">
-                    <li id="title14">Free Time</li>
-                    <li id="venue14">Free Time</li>
-                    <li id="city14">Free Time</li>
-                    <li id="duration14">Free Time</li>
+                    <li id="title13">Free Time</li>
+                    <li id="venue13">Free Time</li>
+                    <li id="city13">Free Time</li>
+                    <li id="genre13">Free Time</li>
                 </ul>
               </div>
             </div>
@@ -398,10 +421,10 @@
                 <div data-role="collapsible" data-filtertext="DayEvent">
                 <h3>14:00 - 15:00</h3>
                 <ul data-role="listview" data-inset="false">
-                    <li id="title15">Free Time</li>
-                    <li id="venue15">Free Time</li>
-                    <li id="city15">Free Time</li>
-                    <li id="duration15">Free Time</li>
+                    <li id="title14">Free Time</li>
+                    <li id="venue14">Free Time</li>
+                    <li id="city14">Free Time</li>
+                    <li id="genre14">Free Time</li>
                 </ul>
               </div>
             </div>
@@ -410,10 +433,10 @@
                 <div data-role="collapsible" data-filtertext="DayEvent">
                 <h3>15:00 - 16:00</h3>
                 <ul data-role="listview" data-inset="false">
-                    <li id="title16">Free Time</li>
-                    <li id="venue16">Free Time</li>
-                    <li id="city16">Free Time</li>
-                    <li id="duration16">Free Time</li>
+                    <li id="title15">Free Time</li>
+                    <li id="venue15">Free Time</li>
+                    <li id="city15">Free Time</li>
+                    <li id="genre15">Free Time</li>
                 </ul>
               </div>
             </div>
@@ -422,10 +445,10 @@
                 <div data-role="collapsible" data-filtertext="DayEvent">
                 <h3>16:00 - 17:00</h3>
                 <ul data-role="listview" data-inset="false">
-                    <li id="title17">Free Time</li>
-                    <li id="venue17">Free Time</li>
-                    <li id="city17">Free Time</li>
-                    <li id="duration17">Free Time</li>
+                    <li id="title16">Free Time</li>
+                    <li id="venue16">Free Time</li>
+                    <li id="city16">Free Time</li>
+                    <li id="genre16">Free Time</li>
                 </ul>
               </div>
             </div>
@@ -434,10 +457,10 @@
                 <div data-role="collapsible" data-filtertext="DayEvent">
                 <h3>17:00 - 18:00</h3>
                 <ul data-role="listview" data-inset="false">
-                    <li id="title18">Free Time</li>
-                    <li id="venue18">Free Time</li>
-                    <li id="city18">Free Time</li>
-                    <li id="duration18">Free Time</li>
+                    <li id="title17">Free Time</li>
+                    <li id="venue17">Free Time</li>
+                    <li id="city17">Free Time</li>
+                    <li id="genre17">Free Time</li>
                 </ul>
               </div>
             </div>
@@ -446,10 +469,10 @@
                 <div data-role="collapsible" data-filtertext="DayEvent">
                 <h3>18:00 - 19:00</h3>
                 <ul data-role="listview" data-inset="false">
-                    <li id="title19">Free Time</li>
-                    <li id="venue19">Free Time</li>
-                    <li id="city19">Free Time</li>
-                    <li id="duration19">Free Time</li>
+                    <li id="title18">Free Time</li>
+                    <li id="venue18">Free Time</li>
+                    <li id="city18">Free Time</li>
+                    <li id="genre18">Free Time</li>
                 </ul>
               </div>
             </div>
@@ -458,10 +481,10 @@
                 <div data-role="collapsible" data-filtertext="DayEvent">
                 <h3>19:00 - 20:00</h3>
                 <ul data-role="listview" data-inset="false">
-                    <li id="title20">Free Time</li>
-                    <li id="venue20">Free Time</li>
-                    <li id="city20">Free Time</li>
-                    <li id="duration20">Free Time</li>
+                    <li id="title19">Free Time</li>
+                    <li id="venue19">Free Time</li>
+                    <li id="city19">Free Time</li>
+                    <li id="genre19">Free Time</li>
                 </ul>
               </div>
             </div>
@@ -469,10 +492,10 @@
                 <div data-role="collapsible" data-filtertext="DayEvent">
                 <h3>20:00 - 21:00</h3>
                 <ul data-role="listview" data-inset="false">
-                    <li id="title21">Free Time</li>
-                    <li id="venue21">Free Time</li>
-                    <li id="city21">Free Time</li>
-                    <li id="duration21">Free Time</li>
+                    <li id="title20">Free Time</li>
+                    <li id="venue20">Free Time</li>
+                    <li id="city20">Free Time</li>
+                    <li id="genre20">Free Time</li>
                 </ul>
               </div>
             </div>
@@ -481,10 +504,10 @@
                 <div data-role="collapsible" data-filtertext="DayEvent">
                 <h3>21:00 - 22:00</h3>
                 <ul data-role="listview" data-inset="false">
-                    <li id="title22">Free Time</li>
-                    <li id="venue22">Free Time</li>
-                    <li id="city22">Free Time</li>
-                    <li id="duration22">Free Time</li>
+                    <li id="title21">Free Time</li>
+                    <li id="venue21">Free Time</li>
+                    <li id="city21">Free Time</li>
+                    <li id="genre21">Free Time</li>
                 </ul>
               </div>
             </div>
@@ -493,10 +516,10 @@
                 <div data-role="collapsible" data-filtertext="DayEvent">
                 <h3>22:00 - 23:00</h3>
                 <ul data-role="listview" data-inset="false">
-                    <li id="title23">Free Time</li>
-                    <li id="venue23">Free Time</li>
-                    <li id="city23">Free Time</li>
-                    <li id="duration23">Free Time</li>
+                    <li id="title22">Free Time</li>
+                    <li id="venue22">Free Time</li>
+                    <li id="city22">Free Time</li>
+                    <li id="genre22">Free Time</li>
                 </ul>
               </div>
             </div>
@@ -505,10 +528,10 @@
                 <div data-role="collapsible" data-filtertext="DayEvent">
                 <h3>23:00 - 00:00</h3>
                 <ul data-role="listview" data-inset="false">
-                    <li id="title0">Free Time</li>
-                    <li id="venue0">Free Time</li>
-                    <li id="city0">Free Time</li>
-                    <li id="duration0">Free Time</li>
+                    <li id="title23">Free Time</li>
+                    <li id="venue23">Free Time</li>
+                    <li id="city23">Free Time</li>
+                    <li id="genre23">Free Time</li>
                 </ul>
             </div>
         </div>
@@ -535,6 +558,7 @@
         <ul>
           <li id="prevMnth">&#10094;</li>
           <li id="nextMnth">&#10095;</li>
+          <li id="addEv">&#x002B;</li>
           <li>
             <div id="monthText"></div>
             <br> 
@@ -678,6 +702,7 @@ $("#prev").click(function() {
 $("#next").click(function() {
   getEvents(++page);
 });
+
 
 function getAttraction(id) {
   
@@ -862,12 +887,50 @@ function dayBtnFunc(name){
     var eYear = dateSplit[2];
     var eDay = dateSplit[0];
     var eMonth = dateSplit[1];
+    var username = document.getElementById("usernameProf").textContent;
     console.log("DayBtn: " + eDay +"/"+ eMonth +"/"+ eYear);
-    $.get("/eventInfo", { year : eYear, day : eDay, month : eMonth }).done(function( data ) {
-                        
+    $.post("/eventInfo", { username:username, eYear : eYear, eDay : eDay, eMonth : eMonth }).done(function(data) {
+      console.log("time " + data.titleArray[0]);
+      for(var i=0; i< data.cityArray.length; i++){   
+        console.log("time " + data.cityArray[i]);
+        var timeSplit = data.timeArray[i].split(":");
+        console.log(timeSplit[0]);
+        document.getElementById("genre"+timeSplit[0]).innerHTML = data.genreArray[i];
+        document.getElementById("title"+timeSplit[0]).innerHTML =data.titleArray[i];
+        document.getElementById("city"+timeSplit[0]).innerHTML =data.cityArray[i];
+        document.getElementById("venue"+timeSplit[0]).innerHTML =data.venueArray[i];
+      }
     });
   }
 // JQuery Mobile
+// Start of AddEvent
+$( "#addEvBtn" ).click(function() { // when button #signup is clicked    
+  var evTitle = $("#userEvTitle").val();
+  var evDate = $("#userEvDate").val();
+  var evTime= $("#userEvTime").val();
+  var evLocation= $("#userEvLocation").val();
+  var evCity= $("#userEvCity").val();
+  var evCountry= $("#userEvCountry").val();
+  var evType= $("#userEvType").val();
+  console.log("Date: "+evDate);
+  var splitD8 = evDate.split("-");
+  var evYear = splitD8[0];
+  var evMonth = splitD8[1];
+  var evDay = splitD8[2];
+  evTime = evTime + ":00";
+  console.log(evDay+evMonth+evYear+evTime);
+  var username = document.getElementById("usernameProf").textContent;
+  console.log(username);
+  $.post( "/insertEvent", { username: username, evCity : evCity, evCountry : evCountry, evDay :evDay , evYear : evYear, evLocation : evLocation, evMonth :evMonth, evTime : evTime, evTitle : evTitle }).done(function( data ) {
+    console.log(data);
+    if (data == "success"){
+      window.location = "/#calendar";
+    }
+  });
+
+
+});
+// End of Add Event
 // Start of SignUp
 $( "#signupBtn" ).click(function() { // when button #signup is clicked    
         var user = $("#usernameSign").val();
@@ -914,6 +977,7 @@ $( "#loginBtn" ).click(function() { // when button #loginform is clicked
     }
     $.post( "/login", { username : username, password : password }).done(function( data ) {
         console.log(data);
+        document.getElementById("usernameProf").innerHTML = data;
         genEvents();
         //myDate();
         $.get("/login", { }).done(function( data ) {
@@ -929,7 +993,12 @@ $( "#loginBtn" ).click(function() { // when button #loginform is clicked
         }  
     });    
 });
-// End of Login  
+// End of Login
+// start of add
+$( "#addEv" ).click(function() {
+  window.location = "/#insertEv";
+});
+// end of add  
 // start of prev
 $( "#prevMnth" ).click(function() {
   resetDays();
@@ -970,6 +1039,7 @@ $("#eventAddBtn").click(function() {
   var eventCountry =   document.getElementById("eventCountry").textContent;
   var eventTime =   document.getElementById("eventTime").textContent;
   var eventTitle =   document.getElementById("eventTitle").textContent;
+  var username = document.getElementById("usernameProf").textContent;
   var splitTime = eventTime.split(":");
   eventTime = splitTime[0] +":"+ splitTime[1];
   console.log(eventTime);
@@ -980,7 +1050,7 @@ $("#eventAddBtn").click(function() {
   eventDay = (eventDay * 1).toString();
   eventMonth = (eventMonth * 1).toString();
   console.log(eventYear +"/"+ eventDay +"/"+ eventMonth);
-  $.post( "/addEvent", { eventTitle: eventTitle, eventLocation : eventLocation, eventCountry : eventCountry, eventCity : eventCity, eventTime : eventTime,  eventType : eventType, eventYear : eventYear, eventMonth : eventMonth, eventDay : eventDay }).done(function( data ) {
+  $.post( "/addEvent", { username : username, eventTitle: eventTitle, eventLocation : eventLocation, eventCountry : eventCountry, eventCity : eventCity, eventTime : eventTime,  eventType : eventType, eventYear : eventYear, eventMonth : eventMonth, eventDay : eventDay }).done(function( data ) {
     console.log(data);
     $.get("/login", { }).done(function( data ) {
                         

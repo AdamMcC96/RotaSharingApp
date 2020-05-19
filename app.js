@@ -119,16 +119,50 @@ app.post('/login',function(req,res){
       res.send('The value is ' + data);
       res.end();
   }); // end of get /login
-app.get('/eventInfo', function (req, res) {
+  app.post('/insertEvent',function(req,res){
+    var evDay = req.body.evDay;
+    var evMonth = req.body.evMonth;
+    var evYear = req.body.evYear;
+    var evCity = req.body.evCity;
+    var evCounty = req.body.evCounty;
+    var evLocation = req.body.evLocation;
+    var evType = req.body.evType;
+    var evTime = req.body.evTime;
+    var evTitle = req.body.evTitle;
+    var user = req.body.username;
+
+    var mysql = require('mysql')
+    var connection = mysql.createConnection({
+          host     : 'localhost',
+          user     : 'root',
+          password : 'root',
+          database : 'rota'
+    });
+    connection.connect();
+
+    var sqlQuery = 'INSERT INTO rota.events (username, eventTitle, eventMonth, eventYear, eventDay, eventTime, eventLocation, eventCity, eventCountry, eventType) values ("'+user+'", "'+evTitle+'", "'+evMonth+'", "'+evYear+'", "'+evDay+'", "'+evTime+'", "'+evLocation+'", "'+evCity+'","'+evCountry+'", "'+evType+'");';
+    connection.query(sqlQuery, function (err, rows, fields) {
+        if (err) {
+            throw err;
+        }else{
+
+        data = "success";
+        }
+        res.send(data);
+        connection.end();
+        res.end;
+    }); // end query
+  }); // end of post /insertEvent
+app.post('/eventInfo', function (req, res) {
       
     console.log("Fname: " + req.session.fname);
     console.log('/eventInfo');
-    var evDay = req.body.day;
-    var evMonth = req.body.month;
-    var evYear = req.body.year;
-    var user = req.session.username;
-    console.log("app.get " + user + " " + evDay +"/"+ evMonth +"/"+ evYear);
-
+    var evDay = req.body.eDay;
+    var evMonth = req.body.eMonth;
+    var evYear = req.body.eYear;
+    var user = req.body.username;
+    console.log("eventInfo;  " + user + " " + evDay +"/"+ evMonth +"/"+ evYear);
+    //user= "Username55";
     // connect to database
     var mysql = require('mysql')
     var connection = mysql.createConnection({
@@ -141,10 +175,30 @@ app.get('/eventInfo', function (req, res) {
     console.log("Connect to database");
 
     var sql = "select * from rota.events where username = '"+user+"' AND eventDay = '"+evDay+"' AND eventMonth = '"+evMonth+"' AND eventYear = '"+evYear+"' ;";
-    
-    res.send('The value is ' + data);
+    connection.query(sql, function (err, rows, fields) {
+        var titleArray = new Array();
+        var venueArray= new Array();
+        var cityArray= new Array();
+        var genreArray= new Array();
+        var timeArray= new Array();
+        console.log(rows);
+        for(var j=0; j< rows.length; j++){
+            id = rows[j].id;
+            titleArray[j] = rows[j].eventTitle;
+            venueArray[j] = rows[j].eventLocation;
+            cityArray[j] = rows[j].eventCity;
+            genreArray[j] = rows[j].eventType;    
+            timeArray[j] = rows[j].eventTime; 
+            console.log(genreArray[j]+cityArray[j]+venueArray[j]+titleArray[j]+timeArray[j]);       
+        }
+        console.log("end of");
+        connection.end();
+        console.log("end of /eventInfo");
+    res.send ({genreArray: genreArray, cityArray: cityArray, venueArray: venueArray, titleArray: titleArray, timeArray: timeArray});
     res.end();
-}); // end of get /login
+    });
+    
+}); // end of get /eventInfo
 app.post('/signup',function(req,res){
     console.log('/signup');
     // requesting the details from the signup form
@@ -204,7 +258,7 @@ app.post('/signup',function(req,res){
 // start of /addEvent
 app.post('/addEvent',function(req, res){
     
-    var username = req.session.username; // gets the user's username from the session
+    var username = req.body.username; // gets the user's username from the session
     console.log('/addEvent' + " " + username);
     // requesting the details from the addEvent form
     var eventTitle = req.body.eventTitle;
