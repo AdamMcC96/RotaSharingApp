@@ -3,7 +3,7 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
-const session = require('express-session'); // session 
+var session = require('express-session'); // session 
 var bodyParser = require('body-parser'); //bodyParser
 var expressValidator = require('express-validator'); // validator
 var formidable = require('formidable'); // formidable
@@ -25,8 +25,8 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(expressValidator());
 app.use(cookieParser());
 // Use the session middleware
@@ -105,8 +105,10 @@ app.post('/login',function(req,res){
       }
                 
       }); // end of query
-      res.send(username);
       connection.end();
+      res.send(username);
+      
+      res.end();
   }); // end of /login
   app.get('/login', function (req, res) {
       
@@ -115,7 +117,34 @@ app.post('/login',function(req,res){
       var data = req.session.username;
       console.log("app.get " + data);
       res.send('The value is ' + data);
+      res.end();
   }); // end of get /login
+app.get('/eventInfo', function (req, res) {
+      
+    console.log("Fname: " + req.session.fname);
+    console.log('/eventInfo');
+    var evDay = req.body.day;
+    var evMonth = req.body.month;
+    var evYear = req.body.year;
+    var user = req.session.username;
+    console.log("app.get " + user + " " + evDay +"/"+ evMonth +"/"+ evYear);
+
+    // connect to database
+    var mysql = require('mysql')
+    var connection = mysql.createConnection({
+          host     : 'localhost',
+          user     : 'root',
+          password : 'root',
+          database : 'rota'
+    });
+    connection.connect();
+    console.log("Connect to database");
+
+    var sql = "select * from rota.events where username = '"+user+"' AND eventDay = '"+evDay+"' AND eventMonth = '"+evMonth+"' AND eventYear = '"+evYear+"' ;";
+    
+    res.send('The value is ' + data);
+    res.end();
+}); // end of get /login
 app.post('/signup',function(req,res){
     console.log('/signup');
     // requesting the details from the signup form
@@ -165,6 +194,7 @@ app.post('/signup',function(req,res){
         }
         console.log(data);
         res.send(data);
+        res.end();
         }); // salt
     });
 });
@@ -222,6 +252,7 @@ app.post('/addEvent',function(req, res){
             connection.end();
             data="pass";
             res.send(data);
+            res.end();
         }
     });
 });

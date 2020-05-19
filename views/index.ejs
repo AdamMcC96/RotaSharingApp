@@ -4,7 +4,7 @@
 <meta charset="utf-8">
         <meta name="viewport" content="initial-scale=1, maximum-scale=1, width=device-width">
 
-        <title>{{ title }}</title>
+        <title>Rota</title>
         <style>
 .col-xs-12 {
   width: 100%;
@@ -858,6 +858,14 @@ function dayBtnFunc(name){
     console.log("Btn" + name);
     document.location.href = "/#day";
     document.getElementById("dayHeader").innerHTML = name;
+    var dateSplit = name.split("/");
+    var eYear = dateSplit[2];
+    var eDay = dateSplit[0];
+    var eMonth = dateSplit[1];
+    console.log("DayBtn: " + eDay +"/"+ eMonth +"/"+ eYear);
+    $.get("/eventInfo", { year : eYear, day : eDay, month : eMonth }).done(function( data ) {
+                        
+    });
   }
 // JQuery Mobile
 // Start of SignUp
